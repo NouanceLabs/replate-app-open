@@ -25,7 +25,7 @@
     ],
     "paths": {
       "@payload-config": ["./api/src/payload.config.ts"],
-      "react": ["./node_modules/@types/react"],
+      "react": ["./api/node_modules/@types/react"],
       "@payload/*": ["./api/src/*"]
     }
   },
