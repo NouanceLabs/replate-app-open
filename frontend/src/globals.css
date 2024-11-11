@@ -1,0 +1,298 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --info: 204 94% 94%;
+    --info-foreground: 199 89% 48%;
+
+    --success: 149 80% 90%;
+    --success-foreground: 160 84% 39%;
+
+    --warning: 48 96% 89%;
+    --warning-foreground: 25 95% 53%;
+
+    --error: 0 93% 94%;
+    --error-foreground: 0 84% 60%;
+
+    --ring: 240 5.9% 10%;
+
+    --radius: 0.5rem;
+  } */
+
+  :root {
+    /* BASE */
+    --black-alpha-50: hsl(24 10% 10% / 0.5);
+    --primitives-amber-brand-100: hsl(24 96% 91%);
+    --primitives-amber-brand-200: hsl(22 96% 81%);
+    --primitives-amber-brand-300: hsl(22 95% 70%);
+    --primitives-amber-brand-400: hsl(21 94% 62%);
+    --primitives-amber-brand-50: hsl(25 100% 96%);
+    --primitives-amber-brand-500: hsl(23 93% 54%);
+    --primitives-amber-brand-600: hsl(21 79% 49%);
+    --primitives-amber-brand-700: hsl(20 79% 42%);
+    --primitives-amber-brand-800: hsl(19 79% 35%);
+    --primitives-amber-brand-900: hsl(19 79% 28%);
+    --primitives-amber-brand-950: hsl(17 80% 17%);
+    --primitives-base-black: var(--primitives-stone-gray-900, hsl(24 10% 10%));
+    --primitives-base-transparent: hsl(0 0 100% / 0);
+    --primitives-base-white: hsl(0 0 100%);
+    --primitives-error-100: hsl(0 93% 94%);
+    --primitives-error-200: hsl(0 96% 89%);
+    --primitives-error-300: hsl(0 94% 82%);
+    --primitives-error-400: hsl(0 91% 71%);
+    --primitives-error-50: hsl(0 86% 97%);
+    --primitives-error-500: hsl(0 84% 60%);
+    --primitives-error-600: hsl(0 72% 51%);
+    --primitives-error-700: hsl(0 74% 42%);
+    --primitives-error-800: hsl(0 70% 35%);
+    --primitives-error-900: hsl(0 63% 31%);
+    --primitives-error-950: hsl(0 75% 15%);
+    --primitives-stone-gray-100: hsl(60 5% 96%);
+    --primitives-stone-gray-200: hsl(20 6% 90%);
+    --primitives-stone-gray-300: hsl(24 6% 83%);
+    --primitives-stone-gray-400: hsl(24 5% 64%);
+    --primitives-stone-gray-50: hsl(60 9% 98%);
+    --primitives-stone-gray-500: hsl(25 5% 45%);
+    --primitives-stone-gray-600: hsl(33 5% 32%);
+    --primitives-stone-gray-700: hsl(30 6% 25%);
+    --primitives-stone-gray-800: hsl(12 6% 15%);
+    --primitives-stone-gray-900: hsl(24 10% 10%);
+    --primitives-success-100: hsl(149 80% 90%);
+    --primitives-success-200: hsl(152 76% 80%);
+    --primitives-success-300: hsl(156 72% 67%);
+    --primitives-success-400: hsl(158 64% 52%);
+    --primitives-success-50: hsl(152 81% 96%);
+    --primitives-success-500: hsl(160 84% 39%);
+    --primitives-success-600: hsl(161 94% 30%);
+    --primitives-success-700: hsl(163 94% 24%);
+    --primitives-success-800: hsl(163 88% 20%);
+    --primitives-success-900: hsl(164 86% 16%);
+    --primitives-success-950: hsl(166 91% 9%);
+
+    --elements-border-primary: var(--primitives-stone-gray-300, hsl(24 6% 83%));
+    --elements-border-secondary: var(--primitives-stone-gray-200, hsl(20 6% 90%));
+    --elements-border-tertiary: var(--primitives-stone-gray-100, hsl(60 5% 96%));
+    --elements-card: var(--primitives-base-white, hsl(0 0 100%));
+    --elements-fg-card: var(--general-fg-primary, hsl(24 10% 10%));
+    --elements-fg-popover: var(--elements-fg-card, hsl(24 10% 10%));
+    --elements-input: var(--primitives-base-white, hsl(0 0 100%));
+    --elements-popover: var(--elements-card, hsl(0 0 100%));
+    --elements-ring: var(--general-brand-accent, hsl(23 93% 54%));
+    --general-brand-accent: var(--primitives-amber-brand-500, hsl(23 93% 54%));
+    --general-brand-subtle: var(--primitives-amber-brand-200, hsl(22 96% 81%));
+    --general-brand-hover: var(--primitives-amber-brand-700, hsl(20 79% 42%));
+    --general-fg-brand-accent: var(--primitives-base-white, hsl(0 0 100%));
+    --general-fg-brand-subtle: var(--primitives-amber-brand-50, hsl(25 100% 96%));
+    --general-fg-inverse: var(--primitives-base-white, hsl(0 0 100%));
+    --general-fg-inverse-subtle: var(--primitives-stone-gray-600, hsl(33 5% 32%));
+    --general-fg-primary: var(--primitives-stone-gray-900, hsl(24 10% 10%));
+    --general-fg-secondary: var(--primitives-stone-gray-600, hsl(33 5% 32%));
+    --general-fg-subtle: var(--primitives-stone-gray-300, hsl(24 6% 83%));
+    --general-fg-tertiary: var(--primitives-stone-gray-400, hsl(24 5% 64%));
+    --general-inverse: var(--primitives-stone-gray-900, hsl(24 10% 10%));
+    --general-inverse-hover: var(--primitives-stone-gray-700, hsl(30 6% 25%));
+    --general-primary: var(--primitives-stone-gray-50, hsl(60 9% 98%));
+    --general-secondary: var(--primitives-stone-gray-100, hsl(60 5% 96%));
+    --general-subtle: var(--primitives-stone-gray-100, hsl(60 5% 96%));
+    --general-tertiary: var(--primitives-stone-gray-200, hsl(20 6% 90%));
+    --utilities-destructive: var(--primitives-error-600, hsl(0 72% 51%));
+    --utilities-error: var(--primitives-error-500, hsl(0 84% 60%));
+    --utilities-error-hover: var(--primitives-error-700, hsl(0 74% 42%));
+    --utilities-fg-destructive: var(--primitives-base-white, hsl(0 0 100%));
+    --utilities-fg-error: var(--primitives-error-50, hsl(0 86% 97%));
+    --utilities-fg-info: var(--primitives-base-white, hsl(0 0 100%));
+    --utilities-fg-success: var(--primitives-success-50, hsl(152 81% 96%));
+    --utilities-fg-warning-primary: var(--primitives-amber-brand-50, hsl(25 100% 96%));
+    --utilities-info: var(--general-fg-primary, hsl(24 10% 10%));
+    --utilities-success: var(--primitives-success-500, hsl(160 84% 39%));
+    --utilities-warning: var(--primitives-amber-brand-600, hsl(21 79% 49%));
+
+    /* UI */
+    --background: var(--general-primary);
+    --foreground: 240 10% 3.9%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --popover: var(--elements-popover);
+    --popover-foreground: var(--elements-fg-popover);
+
+    --border: var(--elements-border-primary);
+    --input: var(--elements-input);
+
+    --card: var(--elements-card);
+    --card-foreground: var(--elements-fg-card);
+
+    --primary: var(--general-primary);
+    --primary-foreground: var(--general-fg-primary);
+
+    --secondary: var(--general-secondary);
+    --secondary-foreground: var(--general-fg-secondary);
+
+    --accent: var(--general-brand-accent);
+    --accent-foreground: var(--general-fg-brand-accent);
+
+    --destructive: var(--utilities-destructive);
+    --destructive-foreground: var(--utilities-fg-destructive);
+
+    --info: var(--utilities-info);
+    --info-foreground: var(--utilities-fg-info);
+
+    --success: var(--utilities-success);
+    --success-foreground: var(--utilities-fg-success);
+
+    --warning: var(--utilities-warning);
+    --warning-foreground: var(--utilities-fg-warning-primary);
+
+    --error: var(--utilities-error);
+    --error-foreground: var(--utilities-fg-error);
+
+    --ring: var(--elements-ring);
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .step {
+    counter-increment: step;
+  }
+
+  .step:before {
+    @apply absolute w-9 h-9 bg-muted rounded-full font-mono font-medium text-center text-base inline-flex items-center justify-center -indent-px border-4 border-background;
+    @apply ml-[-50px] mt-[-4px];
+    content: counter(step);
+  }
+}
+
+@font-face {
+  font-family: 'Switzer-Variable';
+  src:
+    url('/fonts/Switzer/Switzer-Variable.woff2') format('woff2'),
+    url('/fonts/Switzer/Switzer-Variable.woff') format('woff'),
+    url('/fonts/Switzer/Switzer-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Switzer-Variable';
+  src:
+    url('/fonts/Switzer/Switzer-VariableItalic.woff2') format('woff2'),
+    url('/fonts/Switzer/Switzer-VariableItalic.woff') format('woff'),
+    url('/fonts/Switzer/Switzer-VariableItalic.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: italic;
+}
+
+body {
+  font-family:
+    'Switzer-Variable',
+    system-ui,
+    -apple-system,
+    sans-serif;
+  @apply text-general-fg-primary;
+}
+
+@media (max-width: 640px) {
+  .container {
+    @apply px-4;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  border: 4px solid transparent;
+  background-clip: content-box;
+  @apply bg-accent;
+}
+
+::-webkit-scrollbar-corner {
+  display: none;
+}
+
+.brand-gradient {
+  background: linear-gradient(to bottom, var(--general-brand-accent) 0%, var(--general-primary) 100%);
+}
+
+.primary-gradient {
+  background: var(--gradient-primary, linear-gradient(106deg, rgba(0, 0, 0, 0.05) 3.69%, rgba(0, 0, 0, 0) 97.04%));
+}
+
+.navigation-top-right {
+  /* clip-path: url('/top-right-mask.svg');
+  clip-path: path(
+    'M0 0C18.29 0 33.1101 14.88 33.1101 33.23C33.1101 84.83 74.8001 126.67 126.22 126.67H302.22C329.83 126.67 352.22 149.13 352.22 176.85V194.22V0H0Z'
+  ); */
+  /* mask: url('/top-right-mask.svg');
+  mask-repeat: no-repeat;
+  mask-size: contain; */
+
+  //background: url('/top-right-mask.svg');
+}
+
+@layer components {
+  .heading-1 {
+    @apply text-2xl lg:text-4xl font-medium;
+  }
+
+  .heading-2 {
+    @apply text-2xl font-medium;
+  }
+
+  .heading-3 {
+    @apply text-xl font-medium;
+  }
+
+  .heading-4 {
+    @apply text-lg font-medium;
+  }
+
+  .heading-5 {
+    @apply text-base font-medium;
+  }
+}

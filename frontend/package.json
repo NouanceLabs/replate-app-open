@@ -1,0 +1,40 @@
+{
+  "name": "example-with-tailwindcss",
+  "type": "module",
+  "scripts": {
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start"
+  },
+  "dependencies": {
+    "@kobalte/core": "^0.13.7",
+    "@modular-forms/solid": "^0.24.1",
+    "@solid-primitives/scheduled": "^1.4.4",
+    "@solidjs/router": "^0.14.10",
+    "@solidjs/start": "^1.0.9",
+    "@tailwindcss/typography": "^0.5.15",
+    "autoprefixer": "^10.4.19",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "embla-carousel-solid": "^8.3.0",
+    "jsonwebtoken": "^9.0.2",
+    "payload": "3.0.0-beta.126",
+    "postcss": "^8.4.38",
+    "qs-esm": "^7.0.2",
+    "solid-js": "^1.9.2",
+    "solid-sonner": "^0.2.8",
+    "tailwind-merge": "^2.5.4",
+    "tailwindcss": "^3.4.3",
+    "tailwindcss-animate": "^1.0.7",
+    "valibot": "^0.42.1",
+    "vinxi": "^0.4.3",
+    "vite-tsconfig-paths": "^5.0.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.7",
+    "typescript": "5.6.2"
+  }
+}
