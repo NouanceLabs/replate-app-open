@@ -1,10 +1,8 @@
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
-import sharp from 'sharp'
 
 import { Users } from '@payload/collections/Users'
 import { Media } from '@payload/collections/Media'
@@ -26,6 +24,8 @@ import { hasLike } from '@payload/endpoints/has-like'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+console.log('import.meta.env.VITE_API_ENDPOINT', import.meta)
+
 export default buildConfig({
   serverURL: process.env.SERVER_URL || 'http://localhost:3000',
   admin: {
@@ -37,7 +37,7 @@ export default buildConfig({
   },
   collections: [Users, Media, Recipes, Prompts, Limits, Likes],
   globals: [Settings],
-  editor: lexicalEditor(),
+  editor: undefined,
   endpoints: [
     getUnsplashImages,
     setUnsplashImage,
@@ -67,8 +67,7 @@ export default buildConfig({
     ? process.env.CORS_ORIGINS.includes(',')
       ? process.env.CORS_ORIGINS.split(',')
       : [process.env.CORS_ORIGINS]
-    : undefined,
-  sharp,
+    : [],
   plugins: [
     s3Storage({
       collections: {

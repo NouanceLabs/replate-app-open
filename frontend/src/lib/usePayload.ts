@@ -1,12 +1,12 @@
-import { getPayload as getPayloadFromLibrary } from 'payload'
-import config from '@payload/payload.config'
+import { getPayload } from 'payload'
+import config from '../../../api/src/payload.config'
 import { createAsync, cache } from '@solidjs/router'
 
 const VITE_API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT as string
 
 export async function usePayload() {
   'use server'
-  const payload = await getPayloadFromLibrary({ config })
+  const payload = await getPayload({ config })
 
   return payload
 }

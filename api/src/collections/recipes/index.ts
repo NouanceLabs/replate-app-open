@@ -1,7 +1,6 @@
 import { isAdmin } from '@payload/access/isAdmin'
 import { readAccess, updateAccess } from './access'
 import { slugify } from '@payload/utilities/slugify'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 import {
   CuisinsePreferencesOptions,
