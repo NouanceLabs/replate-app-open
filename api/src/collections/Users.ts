@@ -22,6 +22,9 @@ export const Users: CollectionConfig = {
       allowEmailLogin: true,
       requireEmail: true,
     },
+    cookies: {
+      domain: process.env.COOKIE_DOMAIN || undefined,
+    },
     tokenExpiration: 259200, // 3 days
   },
   fields: [
