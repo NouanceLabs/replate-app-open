@@ -12,6 +12,10 @@ export default defineConfig({
       'process.env.VITE_CDN': process.env.VITE_CDN,
     },
     esbuild: {
+      define: {
+        'process.env.VITE_API_ENDPOINT': process.env.VITE_API_ENDPOINT!,
+        'process.env.VITE_CDN': process.env.VITE_CDN!,
+      },
       exclude: ['@payload/*', '../api/*', 'payload', '@payloadcms/*', 'lexical', '@lexical/*', 'sharp'],
     },
   },
