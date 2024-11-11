@@ -17,8 +17,9 @@ export const Image = ({ enableWrapper = true, media, size: sizeFromProps, classN
   const size = sizeFromProps || 'medium'
   const targetSize = sizes?.[size]
 
+  const CDN = import.meta?.env?.VITE_CDN || process.env.VITE_CDN
   const fileName = targetSize?.filename || urlFromProps
-  const url = `${import.meta.env.VITE_CDN}/${fileName}`
+  const url = `${CDN}/${fileName}`
 
   if (enableWrapper) {
     return (

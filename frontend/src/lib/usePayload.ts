@@ -2,8 +2,6 @@ import { getPayload } from 'payload'
 import config from '../../../api/src/payload.config'
 import { createAsync, cache } from '@solidjs/router'
 
-const VITE_API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT as string
-
 export async function usePayload() {
   'use server'
   const payload = await getPayload({ config })
@@ -12,6 +10,8 @@ export async function usePayload() {
 }
 
 export async function usePayloadAPI(endpoint: string, options: RequestInit = {}) {
+  const VITE_API_ENDPOINT = (import.meta.env.VITE_API_ENDPOINT || process.env.VITE_API_ENDPOINT) as string
+
   const url = `${VITE_API_ENDPOINT}${endpoint}`
 
   return fetch(url, {
