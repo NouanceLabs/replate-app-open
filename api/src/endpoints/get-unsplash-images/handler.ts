@@ -1,4 +1,4 @@
-import { headersWithCors } from '@payload/endpoints/headersWithCors'
+import { headersWithCors } from '@payloadcms/next/utilities'
 import { PayloadHandler } from 'payload'
 import * as qs from 'qs-esm'
 

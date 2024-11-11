@@ -1,6 +1,7 @@
 import { Recipe } from '@payload/payload-types'
 import { Access } from 'payload'
 
+// @ts-expect-error
 export const readAccess: Access<Recipe> = ({ req, data }) => {
   const user = req.user
 

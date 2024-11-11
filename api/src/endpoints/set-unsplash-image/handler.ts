@@ -1,6 +1,6 @@
 import { PayloadHandler } from 'payload'
 import { fileTypeFromBuffer } from 'file-type'
-import { headersWithCors } from '@payload/endpoints/headersWithCors'
+import { headersWithCors } from '@payloadcms/next/utilities'
 import * as qs from 'qs-esm'
 
 const UNSPLASH_API_URL = 'https://api.unsplash.com'

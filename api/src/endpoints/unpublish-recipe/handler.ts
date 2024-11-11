@@ -1,5 +1,5 @@
 import { PayloadHandler } from 'payload'
-import { headersWithCors } from '@payload/endpoints/headersWithCors'
+import { headersWithCors } from '@payloadcms/next/utilities'
 
 export const unpublishRecipeHandler: PayloadHandler = async (req) => {
   const { payload, user } = req

@@ -14,6 +14,7 @@ export const Comments: CollectionConfig = {
     {
       type: 'relationship',
       name: 'recipe',
+      relationTo: 'recipes',
     },
     {
       type: 'relationship',

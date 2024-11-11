@@ -3,8 +3,7 @@ import { responseFormat, systemMessage } from './prompt'
 
 import OpenAI from 'openai'
 import { Recipe } from '@payload/payload-types'
-import { headersWithCors } from '@payload/endpoints/headersWithCors'
-import { slugify } from '@payload/utilities/slugify'
+import { headersWithCors } from '@payloadcms/next/utilities'
 
 const OPENAI_SECRET_KEY = process.env.OPENAI_SECRET_KEY
 const OPENAI_PROJECT_ID = process.env.OPENAI_PROJECT_ID
