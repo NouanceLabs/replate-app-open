@@ -78,6 +78,8 @@ export function GenerateForm() {
     if (initialIngredients()) setIngredients(initialIngredients() || [])
   })
 
+  console.log('debug', { metaEnv: import.meta.env, processEnv: process.env })
+
   // Adding this handle so that spice level cannot be null
   const setSpiceLevel = (value: string | null) => {
     if (value) setSpiceLevelSignal(value as SpiceLevel)
