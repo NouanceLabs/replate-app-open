@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "../",
+    "baseUrl": ".",
     "esModuleInterop": true,
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -24,9 +24,9 @@
       }
     ],
     "paths": {
-      "@payload-config": ["./api/src/payload.config.ts"],
-      "react": ["./api/node_modules/@types/react"],
-      "@payload/*": ["./api/src/*"]
+      "@payload-config": ["./src/payload.config.ts"],
+      "react": ["./node_modules/@types/react"],
+      "@payload/*": ["./src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "redirects.js", "next.config.js"],
