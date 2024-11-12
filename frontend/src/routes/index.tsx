@@ -1,6 +1,7 @@
 import { createAsync, cache } from '@solidjs/router'
 import { usePayload } from '@/lib/usePayload'
 import { LatestListing } from '@/components/listings/LatestListing'
+import { GeneralLayout } from '@/layouts/General'
 
 const getUsers = cache(async () => {
   'use server'
@@ -18,26 +19,19 @@ export const route = {
 }
 
 export default function Home() {
-  const users = createAsync(() => getUsers())
-
   return (
-    <main class=''>
-      <div class='container'>
-        <div class='w-full min-h-[80vh] brand-gradient rounded-[4rem]'></div>
-      </div>
-
-      <div class='container'>
+    <GeneralLayout>
+      <div class=''>
         <h1 class='text-5xl leading-[1.2] font-medium my-16'>
           Welcome back,
           <br /> pantry chef.
         </h1>
       </div>
 
-      <div class='container'>
-        <div class=' primary-gradient px-12 py-24 rounded-[6.25rem]'>
-          <LatestListing />
-        </div>
+      <div class=''>
+        <LatestListing />
       </div>
-    </main>
+      <div class='min-h-[100rem]'></div>
+    </GeneralLayout>
   )
 }
