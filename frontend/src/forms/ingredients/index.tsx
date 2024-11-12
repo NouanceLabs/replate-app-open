@@ -15,6 +15,7 @@ import { TrashIcon } from '@/icons/Trash'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { updateIngredientsClient } from '@/lib/fetch'
 import { IngredientItem } from '@/components/IngredientItem'
+import { useAuth } from '@/auth/provider'
 
 const IngredientsSchema = v.object({
   ingredient: v.string('Your ingredient must be a string.'),
@@ -58,6 +59,7 @@ export type IngredientsFormType = v.InferOutput<typeof IngredientsSchema>
 
 export function IngredientsForm() {
   const [initialIngredients, { mutate }] = createResource(() => getIngredients())
+  const { user } = useAuth()
 
   // We manage the ingredient list in a separate state so we can add and remove items without affecting the form state
   const [managedIngredients, setManagedIngredients] = createSignal<string[]>(initialIngredients() || [])
@@ -86,11 +88,16 @@ export function IngredientsForm() {
   }
 
   const confirmForm = async () => {
-    const response = await updateIngredientsClient('671449ded18089f6212c8a4e', managedIngredients())
+    const userData = user()
+    console.log({ userData })
 
-    if (response) mutate(response)
-    reset(ingredientsForm, { keepDirty: false, keepSubmitCount: false, keepSubmitted: false, keepTouched: false })
-    toast.success('Your ingredients have been updated.')
+    if (userData) {
+      const response = await updateIngredientsClient(userData.id, managedIngredients())
+
+      if (response) mutate(response)
+      reset(ingredientsForm, { keepDirty: false, keepSubmitCount: false, keepSubmitted: false, keepTouched: false })
+      toast.success('Your ingredients have been updated.')
+    }
   }
 
   const showActions = createMemo(() => {
