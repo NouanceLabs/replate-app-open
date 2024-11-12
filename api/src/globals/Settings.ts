@@ -8,6 +8,27 @@ export const Settings: GlobalConfig = {
       hasMany: true,
       name: 'featuredRecipes',
       relationTo: 'recipes',
+      admin: {
+        allowCreate: false,
+        allowEdit: false,
+      },
+      filterOptions: {
+        published: {
+          equals: true,
+        },
+      },
+    },
+    {
+      type: 'relationship',
+      hasMany: true,
+      name: 'editorsPick',
+      label: "Editor's Pick",
+      relationTo: 'recipes',
+      maxRows: 6,
+      admin: {
+        allowCreate: false,
+        allowEdit: false,
+      },
       filterOptions: {
         published: {
           equals: true,

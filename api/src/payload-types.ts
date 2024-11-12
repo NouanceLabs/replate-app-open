@@ -567,6 +567,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Setting {
   id: string;
   featuredRecipes?: (string | Recipe)[] | null;
+  editorsPick?: (string | Recipe)[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -576,6 +577,7 @@ export interface Setting {
  */
 export interface SettingsSelect<T extends boolean = true> {
   featuredRecipes?: T;
+  editorsPick?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

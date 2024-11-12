@@ -18,3 +18,17 @@ export const getLatestRecipes = cache(async () => {
 
   return recipes.docs || []
 }, 'getLatestRecipes')
+
+export const getEditorsPickRecipes = cache(async () => {
+  'use server'
+  const payload = await usePayload()
+
+  const settings = await payload.findGlobal({
+    slug: 'settings',
+    depth: 3,
+  })
+
+  console.log({ settings })
+
+  return settings.editorsPick?.filter((recipe) => typeof recipe !== 'string') || []
+}, 'getEditorsPickRecipes')

@@ -2,6 +2,7 @@ import { createAsync, cache } from '@solidjs/router'
 import { usePayload } from '@/lib/usePayload'
 import { LatestListing } from '@/components/listings/LatestListing'
 import { GeneralLayout } from '@/layouts/General'
+import { EditorsPickListing } from '@/components/listings/EditorsPickListing'
 
 const getUsers = cache(async () => {
   'use server'
@@ -28,10 +29,10 @@ export default function Home() {
         </h1>
       </div>
 
-      <div class=''>
+      <div class='mb-12'>
         <LatestListing />
       </div>
-      <div class='min-h-[100rem]'></div>
+      <EditorsPickListing />
     </GeneralLayout>
   )
 }
