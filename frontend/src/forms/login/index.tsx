@@ -57,24 +57,26 @@ export function LoginForm() {
     <div class='grid gap-6'>
       <Form onSubmit={handleSubmit}>
         <div class='flex flex-col gap-3'>
-          <div class='flex items-end gap-2'>
+          <div class='flex flex-col mb-6'>
             <Field name='email'>
               {(field, props) => (
                 <TextField class='gap-1' validationState={field.error ? 'invalid' : 'valid'}>
                   <TextFieldLabel class=''>Email</TextFieldLabel>
-                  <TextFieldInput {...props} type='email' placeholder='me@email.com' />
+                  <TextFieldInput {...props} type='email' class='placeholder:text-gray-500' placeholder='me@email.com' />
                   <TextFieldErrorMessage>{field.error}</TextFieldErrorMessage>
                 </TextField>
               )}
             </Field>
-            <div class='text-center text-gray-500 py-2'>or</div>
+            <div class='text-center text-gray-500 flex justify-center mt-1 -mb-5'>
+              <div class='bg-primary rounded-full'>or</div>
+            </div>
             <Field name='username'>
               {(field, props) => (
                 <TextField class='gap-1' validationState={field.error ? 'invalid' : 'valid'}>
                   <TextFieldLabel class=''>Username</TextFieldLabel>
                   <div class='relative'>
                     <TextFieldInput {...props} type='text' class='indent-4' />
-                    <span class='absolute left-2 top-2 pointer-events-none' aria-hidden='true'>
+                    <span class='absolute left-2 top-2 pointer-events-none text-gray-500' aria-hidden='true'>
                       @
                     </span>
                   </div>

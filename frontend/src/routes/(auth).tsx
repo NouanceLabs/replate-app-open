@@ -1,7 +1,13 @@
+import { GeneralLayout } from '@/layouts/General'
+
 interface Props {
   children?: any
 }
 
 export default function AuthLayout(props: Props) {
-  return <main class='container mx-auto max-w-[30rem]'>{props.children}</main>
+  return (
+    <GeneralLayout>
+      <div class='container mx-auto max-w-[30rem]'>{props.children}</div>
+    </GeneralLayout>
+  )
 }

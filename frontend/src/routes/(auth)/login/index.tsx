@@ -1,13 +1,22 @@
 import { LoginForm } from '@/forms/login'
 import { isAuthenticated } from '@/auth/api'
+import { A } from '@solidjs/router'
 
 export default function LoginPage() {
   isAuthenticated({ redirectTo: '/' })
 
   return (
-    <div>
-      <h1 class='max-6-xs text-6xl text-sky-700 font-thin uppercase my-16'>Login page</h1>
+    <div class='text-gray-700 w-full'>
+      <div class='mb-8'>
+        <h1 class='heading-1'>Welcome back!</h1>
+      </div>
       <LoginForm />
+
+      <div class='mt-8 prose'>
+        <p>
+          Don't have an account yet? <A href='/register'>Register now</A>
+        </p>
+      </div>
     </div>
   )
 }
