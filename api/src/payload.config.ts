@@ -3,6 +3,7 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
+import sharp from 'sharp'
 
 import { Users } from '@payload/collections/Users'
 import { Media } from '@payload/collections/Media'
@@ -23,8 +24,6 @@ import { hasLike } from '@payload/endpoints/has-like'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-
-console.log('import.meta.env.VITE_API_ENDPOINT', import.meta)
 
 export default buildConfig({
   serverURL: process.env.SERVER_URL || 'http://localhost:3000',
@@ -84,4 +83,5 @@ export default buildConfig({
       },
     }),
   ],
+  sharp: process.env.ENABLE_SHARP ? sharp : undefined,
 })
