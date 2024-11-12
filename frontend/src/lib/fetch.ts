@@ -134,7 +134,7 @@ export const getRecipeByIDClient = async (id: string) => {
 
   if (response.ok) {
     const data = await response.json()
-    console.log({ data })
+
     if (data) {
       return data as Recipe
     }

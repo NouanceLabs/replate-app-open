@@ -1,4 +1,4 @@
-import { createContext, onMount, createSignal, useContext, Accessor, createEffect, createMemo } from 'solid-js'
+import { createContext, onMount, createSignal, useContext, Accessor, createEffect, createMemo, Setter } from 'solid-js'
 import { User } from '@payload/payload-types'
 import { createStore } from 'solid-js/store'
 import { authenticateUser, loginClient, logoutClient, refreshClient } from '@/auth/api'
@@ -7,7 +7,7 @@ import { toast } from 'solid-sonner'
 
 type AuthContextType = {
   user: Accessor<User | null>
-  test: Accessor<string>
+  setUser: Setter<User | null>
   login: (args: Parameters<typeof loginClient>[0]) => void
   logout: () => void
   refresh: () => void
@@ -18,11 +18,11 @@ type AuthContextType = {
 
 const initialState: AuthContextType = {
   user: () => null,
+  setUser: () => null,
   login: () => null,
   logout: () => null,
   refresh: () => null,
   isAuthed: () => false,
-  test: () => 'ALWAYS PRESENT',
   isLoading: () => true,
   isInitialised: () => false,
 }
@@ -43,8 +43,6 @@ export const AuthProvider = (props: Props) => {
 
   const isAuthed = createMemo(() => user() !== null)
 
-  const [test, setTest] = createSignal<string>('ALWAYS PRESENT')
-
   createEffect(() => {
     if (getUserOnRender) {
       const userFromInitialRender = getUserOnRender()
@@ -54,7 +52,6 @@ export const AuthProvider = (props: Props) => {
     }
 
     setIsInitialised(true)
-    setTest('CHANGED')
   })
 
   const login = async (args: Parameters<typeof loginClient>[0]) => {
@@ -88,7 +85,7 @@ export const AuthProvider = (props: Props) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, test, login, logout, isAuthed, refresh, isLoading, isInitialised }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout, isAuthed, refresh, isLoading, isInitialised }}>
       {props.children}
     </AuthContext.Provider>
   )

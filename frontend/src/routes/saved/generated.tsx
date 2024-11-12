@@ -1,20 +1,10 @@
-import { cache } from '@solidjs/router'
-import { usePayload } from '@/lib/usePayload'
 import { SavedLayout } from '@/layouts/Saved'
 import { GeneratedRecipesListing } from '@/components/listings/GeneratedRecipesListing'
-
-const getUsers = cache(async () => {
-  'use server'
-  const payload = await usePayload()
-
-  const users = await payload.find({
-    collection: 'users',
-  })
-
-  return users.docs
-}, 'users')
+import { isAuthenticated } from '@/auth/api'
 
 export default function GeneratedPage() {
+  isAuthenticated({ redirectTo: '/login', negate: true })
+
   return (
     <SavedLayout>
       <GeneratedRecipesListing />

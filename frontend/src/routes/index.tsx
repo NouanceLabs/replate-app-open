@@ -1,6 +1,5 @@
 import { createAsync, cache } from '@solidjs/router'
 import { usePayload } from '@/lib/usePayload'
-import { Test } from '@/components/Test'
 import { LatestListing } from '@/components/listings/LatestListing'
 
 const getUsers = cache(async () => {
@@ -32,8 +31,6 @@ export default function Home() {
           Welcome back,
           <br /> pantry chef.
         </h1>
-
-        <Test />
       </div>
 
       <div class='container'>

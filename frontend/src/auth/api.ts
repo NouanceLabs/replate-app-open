@@ -5,7 +5,7 @@ import { cache, redirect } from '@solidjs/router'
 import jwt from 'jsonwebtoken'
 import { User } from '@payload/payload-types'
 
-export const isAuthenticated = cache(async ({ redirectTo }: { redirectTo?: string } = {}) => {
+export const isAuthenticated = cache(async ({ redirectTo, negate = false }: { redirectTo?: string; negate?: boolean } = {}) => {
   'use server'
   const payload = await usePayload()
 
@@ -25,13 +25,17 @@ export const isAuthenticated = cache(async ({ redirectTo }: { redirectTo?: strin
       if (authStrategy) {
         const authResponse = await authStrategy.authenticate({ payload, headers: event?.request.headers! })
 
-        if (redirectTo && authResponse.user) {
+        if (redirectTo && authResponse.user && !negate) {
           throw redirect(redirectTo)
         }
 
         return Boolean(authResponse.user)
       }
     }
+  }
+
+  if (negate && redirectTo) {
+    throw redirect(redirectTo)
   }
 
   return false

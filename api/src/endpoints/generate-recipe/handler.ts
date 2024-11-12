@@ -7,7 +7,7 @@ import { headersWithCors } from '@payloadcms/next/utilities'
 
 const OPENAI_SECRET_KEY = process.env.OPENAI_SECRET_KEY
 const OPENAI_PROJECT_ID = process.env.OPENAI_PROJECT_ID
-const DEBUG = true
+const DEBUG = process.env.DEBUG
 
 export const generateRecipetHandler: PayloadHandler = async (req) => {
   const { payload, user } = req
@@ -74,23 +74,6 @@ export const generateRecipetHandler: PayloadHandler = async (req) => {
 
     const recipeData = JSON.parse(response.choices[0].message.content)
 
-    console.log('creating a recipe with', {
-      data: {
-        ...recipeData,
-        spiceLevel,
-        difficulty,
-        aiGenerated: true,
-        owner: user.id,
-        servings: Number(servings),
-        ...(dietaryPreferences === 'none'
-          ? { dietaryPreferences: undefined }
-          : { dietaryPreferences: dietaryPreferences.split(',') }),
-        ...(cuisinePreferences === 'none'
-          ? { cuisinePreferences: undefined }
-          : { cuisinePreferences: cuisinePreferences.split(',') }),
-      },
-    })
-
     const recipe = await payload.create({
       collection: 'recipes',
       depth: 0,
@@ -110,8 +93,6 @@ export const generateRecipetHandler: PayloadHandler = async (req) => {
           : { cuisinePreferences: cuisinePreferences.split(',') }),
       },
     })
-
-    console.log('CREATED RECIPE', recipe)
 
     const createdPrompt = await payload.create({
       collection: 'prompts',

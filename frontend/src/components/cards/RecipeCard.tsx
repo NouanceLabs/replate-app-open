@@ -44,7 +44,7 @@ export const RecipeCard = ({ data }: Props) => {
       </div>
       <Show
         when={Boolean(featuredImage)}
-        fallback={<div class='flex items-center justify-center w-full h-full bg-white rounded-xl'>no image</div>}>
+        fallback={<div class='flex items-center justify-center p-4 text-center w-full h-full bg-white rounded-xl'>{data.title}</div>}>
         <Image
           enableWrapper={false}
           className='relative top-0 left-0 w-full h-full object-cover rounded-xl'

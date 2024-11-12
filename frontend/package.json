@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vinxi dev",
     "build": "vinxi build",
-    "start": "vinxi start"
+    "start": "vinxi start",
+    "node-prod": "PORT=3001 node --env-file .env .output/server/index.mjs"
   },
   "dependencies": {
     "@kobalte/core": "^0.13.7",

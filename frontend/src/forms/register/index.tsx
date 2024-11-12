@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import * as v from 'valibot'
 import { loginClient, registerClient } from '@/auth/api'
 
-import { redirect } from '@solidjs/router'
+import { useNavigate } from '@solidjs/router'
 import { useAuth } from '@/auth/provider'
 
 const RegisterSchema = v.pipe(
@@ -50,23 +50,25 @@ const RegisterSchema = v.pipe(
 export type RegisterForm = v.InferOutput<typeof RegisterSchema>
 
 export function RegisterForm() {
-  const { user } = useAuth()
-  const [authForm, { Form, Field }] = createForm<RegisterForm>({
-    // @ts-expect-error not sure what this type mismatch is here, likely a bug in the library
-    validate: valiForm(RegisterSchema),
-  })
+  const navigate = useNavigate()
+  const { setUser } = useAuth()
+  const [authForm, { Form, Field }] = createForm<RegisterForm>()
 
   const handleSubmit: SubmitHandler<RegisterForm> = async ({ email, username, password, confirmPassword }) => {
     const registration = await registerClient(email, username, password, confirmPassword)
 
     if (registration?.ok) {
-      return loginClient({ email, password }).then((response) => {
-        if (response?.ok) {
-          redirect('/')
-        } else {
-          throw new FormError('There was an error logging in.')
+      const loginResponse = await loginClient({ email, password })
+
+      if (loginResponse?.ok) {
+        const data = await loginResponse.json()
+
+        if (data?.user) {
+          console.log('setting user')
+          setUser(data.user)
+          navigate('/')
         }
-      })
+      }
     } else {
       const errorLog = await registration?.json()
       const errors: Record<string, any> = {}
@@ -84,7 +86,7 @@ export function RegisterForm() {
     <div class='grid gap-6'>
       <Form onSubmit={handleSubmit}>
         <div>{authForm.response.message}</div>
-        <div class='gap-4'>
+        <div class='flex flex-col gap-4'>
           <Field name='email'>
             {(field, props) => (
               <TextField class='gap-1' validationState={field.error ? 'invalid' : 'valid'}>

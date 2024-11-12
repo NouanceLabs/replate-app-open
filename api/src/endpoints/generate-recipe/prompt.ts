@@ -101,7 +101,7 @@ Try to respect the cuisine preferences provided but this are not required.
 
 Try to respect the number of servings provided.
 
-It is important to respect the dietary preferences.
+It is important to respect the dietary preferences. Do not generate contradictory recipes to the dietary preferences provided. For example, if the dietary preferences are vegan or vegetarian, do not include meat or any animal products in the recipe.
 
 It is important to respect the spice level.
 

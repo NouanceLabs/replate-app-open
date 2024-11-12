@@ -78,8 +78,6 @@ export function GenerateForm() {
     if (initialIngredients()) setIngredients(initialIngredients() || [])
   })
 
-  console.log('debug', { metaEnv: import.meta.env, processEnv: process.env })
-
   // Adding this handle so that spice level cannot be null
   const setSpiceLevel = (value: string | null) => {
     if (value) setSpiceLevelSignal(value as SpiceLevel)
@@ -132,10 +130,7 @@ export function GenerateForm() {
       dietaryPreferences: dietary.length > 0 ? dietary.map((item) => item.value).join(',') : undefined,
     }
 
-    console.log({ input })
     const generatedRecipe = await generateRecipeClient(JSON.stringify(input))
-
-    console.log('recieveddd', { generatedRecipe })
 
     if (typeof generatedRecipe === 'number') {
       toast.error('An error occurred while generating the recipe. Refreshing.')
@@ -193,13 +188,7 @@ export function GenerateForm() {
               </p>
 
               <div class='flex gap-2'>
-                <TextField
-                  class='gap-1'
-                  onChange={setIngredientInput}
-                  value={ingredientInput()}
-                  /* validationState={field.error ? 'invalid' : 'valid'} */
-                  /* value={(field.value as unknown as string) || ''} */
-                >
+                <TextField class='gap-1' onChange={setIngredientInput} value={ingredientInput()}>
                   <TextFieldLabel class='sr-only'>Add an ingredient</TextFieldLabel>
                   <div class='relative'>
                     <TextFieldInput
@@ -242,6 +231,7 @@ export function GenerateForm() {
           // @ts-expect-error
           optionValue={'value'}
           optionLabel={'label'}
+          closeOnSelection={true}
           multiple={true}
           options={CuisinsePreferencesOptions}
           placeholder='Select a preferred cuisine…'
@@ -282,6 +272,7 @@ export function GenerateForm() {
           optionValue={'value'}
           optionLabel={'label'}
           multiple={true}
+          closeOnSelection={true}
           options={DietaryPreferencesOptions}
           placeholder='Select any dietary preferences…'
           // @ts-expect-error

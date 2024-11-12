@@ -89,7 +89,6 @@ export function IngredientsForm() {
 
   const confirmForm = async () => {
     const userData = user()
-    console.log({ userData })
 
     if (userData) {
       const response = await updateIngredientsClient(userData.id, managedIngredients())
