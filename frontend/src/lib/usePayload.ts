@@ -10,7 +10,7 @@ export async function usePayload() {
 }
 
 export async function usePayloadAPI(endpoint: string, options: RequestInit = {}) {
-  const VITE_API_ENDPOINT = (import.meta.env.VITE_API_ENDPOINT || process.env.VITE_API_ENDPOINT) as string
+  const VITE_API_ENDPOINT = (import.meta.env.VITE_API_ENDPOINT || process.env.VITE_API_ENDPOINT || 'https://api.replate.food/api') as string
 
   const url = `${VITE_API_ENDPOINT}${endpoint}`
 

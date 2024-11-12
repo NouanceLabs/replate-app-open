@@ -17,7 +17,7 @@ export const Image = ({ enableWrapper = true, media, size: sizeFromProps, classN
   const size = sizeFromProps || 'medium'
   const targetSize = sizes?.[size]
 
-  const CDN = import.meta?.env?.VITE_CDN || process.env.VITE_CDN
+  const CDN = import.meta?.env?.VITE_CDN || process.env.VITE_CDN || 'https://cdn.replate.food'
   const fileName = targetSize?.filename || urlFromProps
   const url = `${CDN}/${fileName}`
 
