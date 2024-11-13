@@ -12,7 +12,7 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 
 import { authenticateUser } from '@/auth/api'
 import { SearchIcon } from '@/icons/Search'
-import { createEffect, createResource, createSignal, For, JSX, Show } from 'solid-js'
+import { createEffect, createMemo, createResource, createSignal, For, JSX, Show } from 'solid-js'
 import { usePayload } from '@/lib/usePayload'
 import { IngredientItem } from '@/components/IngredientItem'
 import { Button } from '@/components/ui/button'
@@ -98,8 +98,20 @@ export function GenerateForm() {
     setIngredients((prev) => prev.filter((item) => item !== ingredient))
   }
 
+  const containsAllIngredients = createMemo((): boolean => {
+    const initialList = initialIngredients()
+    const newList = ingredients()
+
+    const lowerCaseIngredients = newList.map((ingredient) => ingredient.toLowerCase())
+    return initialList ? initialList.every((ingredient) => lowerCaseIngredients.includes(ingredient.toLowerCase())) : true
+  })
+
   const insertIngredient = (ingredient: string) => {
     setIngredients((prev) => [...prev, ingredient])
+
+    if (pantryDialogOpen()) {
+      if (containsAllIngredients()) setPantryDialogOpen(false)
+    }
   }
 
   const removeCuisineItem = (label: string) => {
@@ -212,20 +224,22 @@ export function GenerateForm() {
                 </div>
                 <Show when={initialIngredients()?.length}>
                   <Dialog open={pantryDialogOpen()} onOpenChange={setPantryDialogOpen}>
-                    <DialogTrigger as={Button} variant='secondary'>
+                    <DialogTrigger as={Button} variant='secondary' disabled={containsAllIngredients()}>
                       From my pantry
                     </DialogTrigger>
-                    <DialogContent class=''>
-                      <h3 class='text-sm font-medium'>From my pantry</h3>
-                      <ul class='max-h-[30rem] overflow-y-auto lg:max-h-none grid grid-cols-1 lg:grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))] gap-8'>
-                        <For each={initialIngredients()}>
-                          {(ingredient) => (
-                            <Show when={!ingredientExists(ingredient)}>
-                              <IngredientItem ingredient={ingredient} onInsert={insertIngredient} as='li' />
-                            </Show>
-                          )}
-                        </For>
-                      </ul>
+                    <DialogContent class='h-full max-h-[30rem]'>
+                      <div class='pt-4'>
+                        <h3 class='text-sm font-medium mb-12'>From my pantry</h3>
+                        <ul class='max-h-[30rem] overflow-y-auto lg:max-h-none grid grid-cols-1 lg:grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))] gap-8'>
+                          <For each={initialIngredients()}>
+                            {(ingredient) => (
+                              <Show when={!ingredientExists(ingredient)}>
+                                <IngredientItem ingredient={ingredient} onInsert={insertIngredient} as='li' />
+                              </Show>
+                            )}
+                          </For>
+                        </ul>
+                      </div>
                     </DialogContent>
                   </Dialog>
                 </Show>

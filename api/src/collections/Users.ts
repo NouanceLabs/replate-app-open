@@ -25,7 +25,7 @@ export const Users: CollectionConfig = {
     cookies: {
       domain: process.env.COOKIE_DOMAIN || undefined,
     },
-    tokenExpiration: 259200, // 3 days
+    tokenExpiration: 518400, // 6 days
   },
   fields: [
     {

@@ -16,12 +16,12 @@ export const CarouselItem = ({ data }: Props) => {
     <article class='relative'>
       <Image
         media={data.featuredImage as Media}
-        className='object-cover h-full w-full rounded-6 lg:rounded-10 min-h-[36rem] max-h-[44.5rem]'
+        className='object-cover  w-full rounded-6 lg:rounded-10 h-[36rem] xl:h-[45rem]'
         wrapperClassName='h-full w-full '
         size='xlarge'
       />
 
-      <div class='absolute bottom-8 right-8 flex flex-col items-start gap-4'>
+      <div class='absolute bottom-2 left-4 right-4 md:bottom-8 md:left-auto md:right-8 flex flex-col items-start gap-4'>
         <div class='bg-general-inverse text-white px-4 py-2 rounded-xl'>Featured recipe</div>
         <div class='bg-background rounded-xl p-4'>
           <h2 class='heading-3 mb-4 max-w-[18.75rem]'>{data.title}</h2>

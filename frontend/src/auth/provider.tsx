@@ -84,6 +84,16 @@ export const AuthProvider = (props: Props) => {
     }
   }
 
+  onMount(async () => {
+    const user = await authenticateUser()
+
+    if (user) {
+      setUser(user)
+    }
+
+    setIsLoading(false)
+  })
+
   return (
     <AuthContext.Provider value={{ user, setUser, login, logout, isAuthed, refresh, isLoading, isInitialised }}>
       {props.children}
