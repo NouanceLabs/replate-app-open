@@ -6,6 +6,7 @@ import './globals.css'
 import { Toaster } from 'solid-sonner'
 import { AuthProvider } from '@/auth/provider'
 import { MetaProvider, Title, Link, Meta } from '@solidjs/meta'
+import { Footer } from '@/components/Footer'
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
             <Header />
             <Suspense>{props.children}</Suspense>
             <Toaster richColors closeButton />
+            <Footer />
           </AuthProvider>
         </MetaProvider>
       )}>

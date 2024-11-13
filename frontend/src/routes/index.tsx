@@ -1,38 +1,40 @@
-import { createAsync, cache } from '@solidjs/router'
-import { usePayload } from '@/lib/usePayload'
+import { createAsync } from '@solidjs/router'
 import { LatestListing } from '@/components/listings/LatestListing'
 import { GeneralLayout } from '@/layouts/General'
 import { EditorsPickListing } from '@/components/listings/EditorsPickListing'
-
-const getUsers = cache(async () => {
-  'use server'
-  const payload = await usePayload()
-
-  const users = await payload.find({
-    collection: 'users',
-  })
-
-  return users.docs
-}, 'users')
-
-export const route = {
-  preload: () => getUsers(),
-}
+import { ContentBlock } from '@/components/ContentBlock'
+import { FeaturedRecipesCarousel } from '@/components/FeaturedRecipesCarousel'
+import { isAuthenticated } from '@/auth/api'
+import { Match, Switch } from 'solid-js'
 
 export default function Home() {
+  const isAuth = createAsync(() => isAuthenticated())
+
   return (
     <GeneralLayout>
-      <div class=''>
-        <h1 class='text-5xl leading-[1.2] font-medium my-16'>
-          Welcome back,
-          <br /> pantry chef.
-        </h1>
+      <div class='mb-16'>
+        <Switch>
+          <Match when={isAuth()}>
+            <h1 class='text-5xl leading-[1.2] font-medium mb-16'>
+              Welcome back,
+              <br /> pantry chef.
+            </h1>
+          </Match>
+          <Match when={!isAuth()}>
+            <h1 class='text-5xl leading-[1.2] font-medium mb-16'>Create magic from your pantry.</h1>
+          </Match>
+        </Switch>
+
+        <FeaturedRecipesCarousel />
       </div>
 
-      <div class='mb-12'>
+      <div class='flex flex-col gap-[7rem]'>
         <LatestListing />
+
+        <EditorsPickListing />
+
+        <ContentBlock />
       </div>
-      <EditorsPickListing />
     </GeneralLayout>
   )
 }

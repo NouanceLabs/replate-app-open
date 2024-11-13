@@ -50,6 +50,12 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      embla-carousel-autoplay:
+        specifier: ^8.3.1
+        version: 8.3.1(embla-carousel@8.3.0)
+      embla-carousel-fade:
+        specifier: ^8.3.1
+        version: 8.3.1(embla-carousel@8.3.0)
       embla-carousel-solid:
         specifier: ^8.3.0
         version: 8.3.0(solid-js@1.9.2)
@@ -2426,6 +2432,16 @@ packages:
 
   electron-to-chromium@1.5.41:
     resolution: {integrity: sha512-dfdv/2xNjX0P8Vzme4cfzHqnPm5xsZXwsolTYr0eyW18IUmNyG08vL+fttvinTfhKfIKdRoqkDIC9e9iWQCNYQ==}
+
+  embla-carousel-autoplay@8.3.1:
+    resolution: {integrity: sha512-L8THF1AJJSQtlNa1wZ6lEKh/CiZssE3TsVFtabQNsS+pc1O1O/YTIYCC3khdQAztGMOBf3WfVDIY/4AIfQj3JQ==}
+    peerDependencies:
+      embla-carousel: 8.3.1
+
+  embla-carousel-fade@8.3.1:
+    resolution: {integrity: sha512-YUnb222xjkdRDtyC09X59GapaYB6P8baAEHy1rn2UQ0yqixa80kXhG74SoJ6wxLYsZOaw5fZQ2V25p04ltHE/w==}
+    peerDependencies:
+      embla-carousel: 8.3.1
 
   embla-carousel-reactive-utils@8.3.0:
     resolution: {integrity: sha512-EYdhhJ302SC4Lmkx8GRsp0sjUhEN4WyFXPOk0kGu9OXZSRMmcBlRgTvHcq8eKJE1bXWBsOi1T83B+BSSVZSmwQ==}
@@ -7205,6 +7221,14 @@ snapshots:
   ee-first@1.1.1: {}
 
   electron-to-chromium@1.5.41: {}
+
+  embla-carousel-autoplay@8.3.1(embla-carousel@8.3.0):
+    dependencies:
+      embla-carousel: 8.3.0
+
+  embla-carousel-fade@8.3.1(embla-carousel@8.3.0):
+    dependencies:
+      embla-carousel: 8.3.0
 
   embla-carousel-reactive-utils@8.3.0(embla-carousel@8.3.0):
     dependencies:

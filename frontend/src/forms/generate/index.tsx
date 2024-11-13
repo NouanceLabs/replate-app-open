@@ -491,7 +491,8 @@ export function GenerateForm() {
 
       <Dialog open={submissionDialogOpen()} onOpenChange={() => {}}>
         <DialogContent showCloseButton={false} class='brand-gradient'>
-          <img loading='lazy' src='/images/loading-gif.gif' />
+          <img loading='lazy' src='/images/loading-gif.gif' alt='Loading animation...' />
+          <p class='sr-only'>Generating recipe please wait</p>
         </DialogContent>
       </Dialog>
     </div>

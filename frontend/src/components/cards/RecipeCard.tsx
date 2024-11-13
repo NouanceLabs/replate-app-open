@@ -26,7 +26,7 @@ export const RecipeCard = ({ data }: Props) => {
         <h3 class='sr-only'>{title}</h3>
       </A>
 
-      <div class='text-sm absolute bottom-1 left-1 md:bottom-4 md:left-4 z-10 bg-elements-fg-card text-general-fg-inverse px-3 py-2 rounded-2 flex gap-1 md:gap-2'>
+      <div class='text-sm absolute bottom-1 left-1 sm:bottom-2 sm:left-2 md:bottom-4 md:left-4 z-10 bg-elements-fg-card text-general-fg-inverse px-3 py-2 rounded-2 flex gap-1 md:gap-2'>
         <div class='flex gap-0 lg:gap-1 items-center'>
           <ClockIcon />
           <span class=''>{prepTime?.replace('minutes', 'min')}</span>

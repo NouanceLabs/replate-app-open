@@ -1,5 +1,5 @@
 import { useAuth } from '@/auth/provider'
-import { A, useLocation } from '@solidjs/router'
+import { A, useBeforeLeave, useLocation } from '@solidjs/router'
 import { createSignal, Show } from 'solid-js'
 import { createScrollPosition } from '@solid-primitives/scroll'
 import { createEffect } from 'solid-js'
@@ -11,6 +11,7 @@ import { MenuIcon } from '@/icons/Menu'
 export function MobileHeader() {
   const location = useLocation()
   const { isAuthed } = useAuth()
+  const [showMenu, setShowMenu] = createSignal(false)
   const [roundedCorners, setRoundCorners] = createSignal(false)
   const linkClass = 'py-2 flex items-center gap-2'
   const active = (path: string) => (path == location.pathname ? 'font-bold' : '')
@@ -36,7 +37,7 @@ export function MobileHeader() {
             Replate
           </A>
           <Show when={!isAuthed()}>
-            <Sheet>
+            <Sheet open={showMenu()} onOpenChange={setShowMenu}>
               <SheetTrigger>
                 <MenuIcon />
                 <span class='sr-only'>Open menu</span>
@@ -46,12 +47,12 @@ export function MobileHeader() {
                   <nav>
                     <ul class='flex flex-col gap-3'>
                       <li>
-                        <A class={`${linkClass} ${active('/login')} `} href='/login'>
+                        <A class={`${linkClass} ${active('/login')} `} href='/login' onClick={() => setShowMenu(false)}>
                           Login
                         </A>
                       </li>
                       <li>
-                        <A class={`${linkClass} ${active('/register')} `} href='/register'>
+                        <A class={`${linkClass} ${active('/register')} `} href='/register' onClick={() => setShowMenu(false)}>
                           Register
                         </A>
                       </li>
