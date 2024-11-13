@@ -69,7 +69,7 @@ export const PhotoSelector = ({ recipe, refetch }: Props) => {
       <DialogTrigger onClick={() => setHasBeenOpened(true)} as={Button} variant={'secondary'} class='text-sm' /* as={Button} */>
         Add a photo
       </DialogTrigger>
-      <DialogContent class='max-w-[60rem] max-h-[50rem] p-0'>
+      <DialogContent class='max-w-[60rem] p-0'>
         <div class='relative flex flex-col gap-6 p-6 pb-0 '>
           <DialogHeader class='mb-8'>
             <DialogTitle>Choose a photo for this recipe.</DialogTitle>
@@ -104,34 +104,39 @@ export const PhotoSelector = ({ recipe, refetch }: Props) => {
               </div>
             }>
             <Match when={images().length > 0}>
-              <ToggleGroup class='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4' onChange={setSelectedImage}>
-                <For each={images()}>
-                  {(image) => {
-                    const attribution = `Photo by <a target="_blank" href="${image.user.links.html}">@${image.user.username}</a> at <a target="_blank" href="${image.links.html}">Unsplash</a>.`
+              <div class=''>
+                <ToggleGroup class=' grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4' onChange={setSelectedImage}>
+                  <For each={images()}>
+                    {(image) => {
+                      const attribution = `Photo by <a target="_blank" href="${image.user.links.html}">@${image.user.username}</a> at <a target="_blank" href="${image.links.html}">Unsplash</a>.`
 
-                    return (
-                      <ToggleGroupItem
-                        class='relative h-auto w-auto p-0 aria-pressed:border-general-brand-accent aria-pressed:border-4 aspect-square flex items-stretch justify-stretch'
-                        value={image.id}>
-                        <img loading='lazy' class='object-cover w-full' src={image.urls.small} alt={image.alt_description} />
+                      return (
+                        <ToggleGroupItem
+                          class='relative h-auto w-auto p-0 aria-pressed:border-general-brand-accent aria-pressed:border-4 aspect-square flex items-stretch justify-stretch'
+                          value={image.id}>
+                          <img loading='lazy' class='object-cover w-full' src={image.urls.small} alt={image.alt_description} />
 
-                        <Tooltip>
-                          <TooltipTrigger class='text-white absolute top-1 right-1'>
-                            <HelpCircleIcon />
-                            <span class='sr-only'>Attribution</span>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p innerHTML={attribution}></p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </ToggleGroupItem>
-                    )
-                  }}
-                </For>
-              </ToggleGroup>
+                          <Tooltip>
+                            <TooltipTrigger class='text-white absolute top-1 right-1'>
+                              <HelpCircleIcon />
+                              <span class='sr-only'>Attribution</span>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p innerHTML={attribution}></p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </ToggleGroupItem>
+                      )
+                    }}
+                  </For>
+                </ToggleGroup>
+              </div>
             </Match>
             <Match when={hasError()}>
-              <div>There has been an error fetching the images.</div>
+              <div>
+                There has been an error fetching the images. We likely hit our API limits, we're actively trying to increase our capacity.
+                Please try again later.
+              </div>
             </Match>
           </Switch>
 
