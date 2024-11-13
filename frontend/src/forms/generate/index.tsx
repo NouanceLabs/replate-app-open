@@ -178,6 +178,7 @@ export function GenerateForm() {
 
     if (ingredients().length === 0) {
       toast.error('Please add at least one ingredient.')
+      return
     }
 
     setSubmissionDialogOpen(true)
