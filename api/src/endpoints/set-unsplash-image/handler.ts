@@ -107,7 +107,7 @@ export const setUnsplashImageHandler: PayloadHandler = async (req) => {
       size: size || buffer.length, // If content-length is not available, use buffer length
     }
 
-    const attribution = `Photo by <a target="_blank" href="${imageData.user.links.html}">@${imageData.user.username}</a> at <a target="_blank" href="${imageData.links.html}">Unsplash</a>.`
+    const attribution = `Photo by <a target="_blank" href="${imageData.user.links.html}?utm_source=replate&utm_medium=referral">@${imageData.user.username}</a> at <a target="_blank" href="${imageData.links.html}?utm_source=replate&utm_medium=referral">Unsplash</a>.`
 
     const createdMedia = await payload.create({
       collection: 'media',

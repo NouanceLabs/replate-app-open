@@ -108,7 +108,7 @@ export const PhotoSelector = ({ recipe, refetch }: Props) => {
                 <ToggleGroup class=' grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4' onChange={setSelectedImage}>
                   <For each={images()}>
                     {(image) => {
-                      const attribution = `Photo by <a target="_blank" href="${image.user.links.html}">@${image.user.username}</a> at <a target="_blank" href="${image.links.html}">Unsplash</a>.`
+                      const attribution = `Photo by <a target="_blank" href="${image.user.links.html}?utm_source=replate&utm_medium=referral">@${image.user.username}</a> at <a target="_blank" href="${image.links.html}?utm_source=replate&utm_medium=referral">Unsplash</a>.`
 
                       return (
                         <ToggleGroupItem
