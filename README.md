@@ -6,7 +6,7 @@ Replate is a food recipe generation app and semi-social media platform for recip
 
 This is our entry into the SolidJS hackathon 2024.
 
-Team is [Paul](https://x.com/paulpopus) and [Shelly](https://www.instagram.com/shellsterstudios/profilecard/).
+Team is [Paul](https://x.com/paulpopus) and [Shelly](https://www.instagram.com/shellsterstudios).
 
 This project was started on Oct 19 2024.
 

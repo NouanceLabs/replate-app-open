@@ -9,7 +9,7 @@ export const Footer = () => {
               paul
             </a>{' '}
             and{' '}
-            <a href='https://www.instagram.com/shellsterstudios/profilecard/' target='_blank'>
+            <a href='https://www.instagram.com/shellsterstudios' target='_blank'>
               shelly
             </a>
           </p>
