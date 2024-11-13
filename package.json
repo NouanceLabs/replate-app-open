@@ -3,6 +3,18 @@
   "version": "1.0.0",
   "description": "Recipe generation app built on SolidJS, Payload and OpenAI based on user ingredients and preferences.",
   "main": "index.js",
+  "contributors": [
+    {
+      "name": "Paul Popus",
+      "email": "paul@nouance.io",
+      "url": "https://x.com/paulpopus"
+    },
+    {
+      "name": "Shelly Pantelidis",
+      "email": "hello@shellster.de",
+      "url": "https://shellster.de/"
+    }
+  ],
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
