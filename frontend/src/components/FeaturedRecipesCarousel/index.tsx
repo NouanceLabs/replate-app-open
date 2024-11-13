@@ -19,7 +19,7 @@ export const FeaturedRecipesCarousel = () => {
           stopOnMouseEnter: true,
           stopOnInteraction: false,
           playOnInit: true,
-          delay: 1000,
+          delay: 5000,
         }),
         Fade(),
       ]}>

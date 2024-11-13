@@ -24,7 +24,7 @@ export const Settings: GlobalConfig = {
       name: 'editorsPick',
       label: "Editor's Pick",
       relationTo: 'recipes',
-      maxRows: 6,
+      maxRows: 8,
       admin: {
         allowCreate: false,
         allowEdit: false,
