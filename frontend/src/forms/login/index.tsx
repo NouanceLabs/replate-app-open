@@ -8,6 +8,7 @@ import * as v from 'valibot'
 import { loginClient } from '@/auth/api'
 import { toast } from 'solid-sonner'
 import { useNavigate } from '@solidjs/router'
+import { LoadingIndicator } from '@/components/LoadingIndicator'
 
 const LoginSchema = v.pipe(
   v.object({
@@ -96,7 +97,7 @@ export function LoginForm() {
           </Field>
 
           <Button type='submit' disabled={authForm.submitting}>
-            {authForm.submitting && <div class='mr-2 size-4 animate-spin'>...loading</div>}
+            {authForm.submitting && <LoadingIndicator className='mr-2' />}
             Login
           </Button>
         </div>

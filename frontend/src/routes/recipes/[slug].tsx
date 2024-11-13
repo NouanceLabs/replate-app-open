@@ -18,6 +18,7 @@ import { useAuth } from '@/auth/provider'
 import { RecipeActions } from '@/components/RecipeActions'
 import { Title, Meta } from '@solidjs/meta'
 import { formatCalories, formatDifficulty } from '@/lib/utils'
+import { LoadingIndicator } from '@/components/LoadingIndicator'
 
 const getRecipe = async (slug: string, options?: APIOptions) => {
   'use server'
@@ -90,7 +91,13 @@ export default function RecipesPage() {
       <Meta property='og:title' content={`${recipe()?.title} | Replate`} />
       <Meta property='og:title' content={`${recipe()?.title} | Replate`} />
       <GeneralLayout>
-        <Show when={recipe()} fallback={<div>LOADING...</div>}>
+        <Show
+          when={recipe()}
+          fallback={
+            <div>
+              <LoadingIndicator className='mr-2' />
+            </div>
+          }>
           <div class='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-16'>
             <div class='relative justify-centerw-full md:min-h-[37.5rem] md:max-h-[50rem] md:max-w-[30rem]'>
               <Show

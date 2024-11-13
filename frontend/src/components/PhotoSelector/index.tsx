@@ -9,6 +9,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import { HelpCircleIcon } from '@/icons/HelpCircle'
 import { Recipe } from '@payload/payload-types'
 import clsx from 'clsx'
+import { LoadingIndicator } from '@/components/LoadingIndicator'
 
 interface Props {
   recipe: Accessor<Recipe> | Resource<Recipe>
@@ -77,22 +78,31 @@ export const PhotoSelector = ({ recipe, refetch }: Props) => {
 
           <Show when={recipe()?.keywords}>
             <div>
-              <For each={recipe()!.keywords}>
-                {(keyword) => (
-                  <button
-                    onClick={() => setQuery(keyword)}
-                    class={clsx(`inline-block border border-border px-2 py-1 rounded-2 text-xs mr-2 mb-2`, {
-                      'bg-general-fg-primary text-white': activeQuery(keyword),
-                      'bg-transparent ': !activeQuery(keyword),
-                    })}>
-                    {keyword}
-                  </button>
-                )}
-              </For>
+              <p class='text-sm mb-1'>Additional filters</p>
+              <div>
+                <For each={recipe()!.keywords}>
+                  {(keyword) => (
+                    <button
+                      onClick={() => setQuery(keyword)}
+                      class={clsx(`inline-block border border-border px-2 py-1 rounded-2 text-xs mr-2 mb-2`, {
+                        'bg-general-fg-primary text-white': activeQuery(keyword),
+                        'bg-transparent ': !activeQuery(keyword),
+                      })}>
+                      {keyword}
+                    </button>
+                  )}
+                </For>
+              </div>
             </div>
           </Show>
 
-          <Switch fallback={<div>LOADING</div>}>
+          <Switch
+            fallback={
+              <div class='flex justify-center items-center gap-4'>
+                <LoadingIndicator />
+                <p>Loading images</p>
+              </div>
+            }>
             <Match when={images().length > 0}>
               <ToggleGroup class='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4' onChange={setSelectedImage}>
                 <For each={images()}>
@@ -133,7 +143,13 @@ export const PhotoSelector = ({ recipe, refetch }: Props) => {
         </div>
 
         <Dialog open={submitting()} onOpenChange={() => {}}>
-          <DialogContent showCloseButton={false}>generating...</DialogContent>
+          <DialogContent
+            showCloseButton={false}
+            class='bg-gradient-to-br from-general-brand-subtle to-white py-12 flex justify-center items-center'>
+            <LoadingIndicator />
+
+            <p class=''>Setting the image...</p>
+          </DialogContent>
         </Dialog>
       </DialogContent>
     </Dialog>

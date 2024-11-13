@@ -22,7 +22,7 @@ export const FeaturedRecipesCarousel = () => {
         Fade(),
       ]}>
       <CarouselContent>
-        <For each={recipes()} fallback={<div>Loading...</div>}>
+        <For each={recipes()}>
           {(recipe) => (
             <CarouselItem>
               <Card data={recipe} />

@@ -8,6 +8,7 @@ import { loginClient, registerClient } from '@/auth/api'
 
 import { useNavigate } from '@solidjs/router'
 import { useAuth } from '@/auth/provider'
+import { LoadingIndicator } from '@/components/LoadingIndicator'
 
 const RegisterSchema = v.pipe(
   v.object({
@@ -131,7 +132,7 @@ export function RegisterForm() {
           </Field>
 
           <Button type='submit' disabled={authForm.submitting}>
-            {authForm.submitting && <div class='mr-2 size-4 animate-spin'>...loading</div>}
+            {authForm.submitting && <LoadingIndicator className='mr-2' />}
             Register
           </Button>
         </div>

@@ -1,4 +1,5 @@
 import { authenticateUser } from '@/auth/api'
+import { useAuth } from '@/auth/provider'
 import { Button } from '@/components/ui/button'
 import { HeartIcon } from '@/icons/Heart'
 import { likeRecipe, unlikeRecipe } from '@/lib/fetch'
@@ -46,11 +47,23 @@ interface Props {
 }
 
 export const LikeButton = ({ recipe, recipeID }: Props) => {
+  const { isAuthed } = useAuth()
   const [isLiked, { mutate }] = createResource<boolean>(() => getExistingLike(recipeID), {
     initialValue: false,
   })
 
   const likeRecipeSubmit = () => {
+    if (!isAuthed()) {
+      toast.info(
+        <div class='prose prose-p:text-sm'>
+          <p>
+            You must be <a href='/login'>logged in</a> to save a recipe.
+          </p>
+        </div>
+      )
+      return
+    }
+
     const recipeData = recipe()
     if (recipeData?.id) {
       if (isLiked()) {

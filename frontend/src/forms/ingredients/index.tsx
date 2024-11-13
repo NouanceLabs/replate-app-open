@@ -16,6 +16,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { updateIngredientsClient } from '@/lib/fetch'
 import { IngredientItem } from '@/components/IngredientItem'
 import { useAuth } from '@/auth/provider'
+import { LoadingIndicator } from '@/components/LoadingIndicator'
 
 const IngredientsSchema = v.object({
   ingredient: v.string('Your ingredient must be a string.'),
@@ -136,7 +137,7 @@ export function IngredientsForm() {
             </div>
 
             <Button type='submit' class='sr-only' disabled={ingredientsForm.submitting}>
-              {ingredientsForm.submitting && <div class='mr-2 size-4 animate-spin'>...loading</div>}
+              {ingredientsForm.submitting && <LoadingIndicator />}
               Insert
             </Button>
           </div>

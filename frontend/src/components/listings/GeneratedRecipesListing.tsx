@@ -6,6 +6,7 @@ import { usePayload } from '@/lib/usePayload'
 import { authenticateUser } from '@/auth/api'
 import { APIOptions } from '@/lib/types'
 import { Recipe } from '@payload/payload-types'
+import { LoadingIndicator } from '@/components/LoadingIndicator'
 
 const getGeneratedRecipes = cache(async (options?: APIOptions) => {
   'use server'
@@ -53,7 +54,10 @@ export const GeneratedRecipesListing = () => {
         each={recipesDocs()}
         fallback={
           <Show when={recipesDocs.loading}>
-            <div>Loading...</div>
+            <div>
+              <LoadingIndicator className='mr-2' />
+              Loading...
+            </div>
           </Show>
         }>
         {(recipe) => <RecipeCard data={recipe} />}
