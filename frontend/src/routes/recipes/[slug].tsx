@@ -87,9 +87,6 @@ export default function RecipesPage() {
 
   return (
     <>
-      <Title>{recipe()?.title} | Replate</Title>
-      <Meta property='og:title' content={`${recipe()?.title} | Replate`} />
-      <Meta property='og:title' content={`${recipe()?.title} | Replate`} />
       <GeneralLayout>
         <Show
           when={recipe()}
@@ -98,6 +95,9 @@ export default function RecipesPage() {
               <LoadingIndicator className='mr-2' />
             </div>
           }>
+          <Title>{recipe()?.title} | Replate</Title>
+          <Meta property='og:title' content={`${recipe()?.title} | Replate`} />
+          <Meta property='og:title' content={`${recipe()?.title} | Replate`} />
           <div class='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-16'>
             <div class='relative justify-centerw-full md:min-h-[37.5rem] md:max-h-[50rem] md:max-w-[30rem]'>
               <Show

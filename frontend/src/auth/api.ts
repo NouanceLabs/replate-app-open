@@ -17,20 +17,24 @@ export const isAuthenticated = cache(async ({ redirectTo, negate = false }: { re
   const token = tokenCookie?.split('=')[1]
 
   if (token) {
-    const validToken = jwt.verify(token, payload.secret)
+    try {
+      const validToken = jwt.verify(token, payload.secret)
 
-    if (validToken) {
-      const authStrategy = payload.authStrategies[0]
+      if (validToken) {
+        const authStrategy = payload.authStrategies[0]
 
-      if (authStrategy) {
-        const authResponse = await authStrategy.authenticate({ payload, headers: event?.request.headers! })
+        if (authStrategy) {
+          const authResponse = await authStrategy.authenticate({ payload, headers: event?.request.headers! })
 
-        if (redirectTo && authResponse.user && !negate) {
-          throw redirect(redirectTo)
+          if (redirectTo && authResponse.user && !negate) {
+            throw redirect(redirectTo)
+          }
+
+          return Boolean(authResponse.user)
         }
-
-        return Boolean(authResponse.user)
       }
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -53,18 +57,22 @@ export const authenticateUser = cache(async () => {
   const token = tokenCookie?.split('=')[1]
 
   if (token) {
-    const validToken = jwt.verify(token, payload.secret)
+    try {
+      const validToken = jwt.verify(token, payload.secret)
 
-    if (validToken) {
-      const authStrategy = payload.authStrategies[0]
+      if (validToken) {
+        const authStrategy = payload.authStrategies[0]
 
-      if (authStrategy) {
-        const authResponse = await authStrategy.authenticate({ payload, headers: event?.request.headers! })
+        if (authStrategy) {
+          const authResponse = await authStrategy.authenticate({ payload, headers: event?.request.headers! })
 
-        if (authResponse.user) {
-          return authResponse.user as unknown as User
+          if (authResponse.user) {
+            return authResponse.user as unknown as User
+          }
         }
       }
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -83,18 +91,22 @@ export const getUser = cache(async () => {
   const token = tokenCookie?.split('=')[1]
 
   if (token) {
-    const validToken = jwt.verify(token, payload.secret)
+    try {
+      const validToken = jwt.verify(token, payload.secret)
 
-    if (validToken) {
-      const authStrategy = payload.authStrategies[0]
+      if (validToken) {
+        const authStrategy = payload.authStrategies[0]
 
-      if (authStrategy) {
-        const authResponse = await authStrategy.authenticate({ payload, headers: event?.request.headers! })
+        if (authStrategy) {
+          const authResponse = await authStrategy.authenticate({ payload, headers: event?.request.headers! })
 
-        if (authResponse.user) {
-          return authResponse.user as unknown as User
+          if (authResponse.user) {
+            return authResponse.user as unknown as User
+          }
         }
       }
+    } catch (error) {
+      console.error(error)
     }
   }
 
