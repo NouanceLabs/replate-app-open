@@ -71,7 +71,7 @@ export const PhotoSelector = ({ recipe, refetch }: Props) => {
       </DialogTrigger>
       <DialogContent class='max-w-[60rem] p-0'>
         <div class='relative flex flex-col gap-6 p-6 pb-0 '>
-          <DialogHeader class='mb-8'>
+          <DialogHeader class='mb-8 text-left'>
             <DialogTitle>Choose a photo for this recipe.</DialogTitle>
             <DialogDescription>All images are sourced from Unsplash.</DialogDescription>
           </DialogHeader>

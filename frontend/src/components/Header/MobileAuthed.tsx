@@ -10,10 +10,11 @@ import { createEffect } from 'solid-js'
 import clsx from 'clsx'
 import { HeartIcon } from '@/icons/Heart'
 import { UserIcon } from '@/icons/User'
+import { LogoutIcon } from '@/icons/Logout'
 
 export function MobileAuthedNav() {
   const location = useLocation()
-  const { isAuthed } = useAuth()
+  const { logout } = useAuth()
   const [roundedCorners, setRoundCorners] = createSignal(false)
   const linkClass = 'py-2 block'
   const active = (path: string) => (path == location.pathname ? 'font-bold' : '')
@@ -60,10 +61,10 @@ export function MobileAuthedNav() {
             </A>
           </li>
           <li>
-            <A class={`${linkClass} ${active('/profile')} `} href='/profile'>
-              <UserIcon />
-              <span class='sr-only'>My profile</span>
-            </A>
+            <Button variant='ghost' onClick={logout}>
+              <LogoutIcon />
+              <span class='sr-only'>Logout</span>
+            </Button>
           </li>
         </ul>
       </nav>

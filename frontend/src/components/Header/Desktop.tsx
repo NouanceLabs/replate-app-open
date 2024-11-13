@@ -9,10 +9,11 @@ import { createScrollPosition } from '@solid-primitives/scroll'
 import { createEffect } from 'solid-js'
 import clsx from 'clsx'
 import { HeartIcon } from '@/icons/Heart'
+import { LogoutIcon } from '@/icons/Logout'
 
 export function DesktopHeader() {
   const location = useLocation()
-  const { isAuthed } = useAuth()
+  const { isAuthed, logout } = useAuth()
   const [roundedCorners, setRoundCorners] = createSignal(false)
   const linkClass = 'py-2 flex items-center gap-2'
   const active = (path: string) => (path == location.pathname ? 'font-bold' : '')
@@ -80,7 +81,7 @@ export function DesktopHeader() {
           </Match>
           <Match when={isAuthed()}>
             <nav class='flex items-center'>
-              <ul class='flex items-center gap-12'>
+              <ul class='flex items-center gap-8'>
                 <li>
                   <A class={`${linkClass} ${active('/saved')} `} href='/saved'>
                     <span class='sr-only'>Saved</span>
@@ -88,14 +89,10 @@ export function DesktopHeader() {
                   </A>
                 </li>
                 <li>
-                  <A class={`${linkClass} ${active('/my-profile')} `} href='/my-profile'>
-                    <span>My profile</span>
-                  </A>
-                </li>
-                <li>
-                  <A class={`${linkClass} ${active('/settings')} `} href='/settings'>
-                    <span>My settings</span>
-                  </A>
+                  <Button variant={'ghost'} onClick={logout}>
+                    <LogoutIcon />
+                    <span class='sr-only'>Logout</span>
+                  </Button>
                 </li>
               </ul>
             </nav>

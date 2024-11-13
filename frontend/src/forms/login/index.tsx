@@ -9,6 +9,7 @@ import { loginClient } from '@/auth/api'
 import { toast } from 'solid-sonner'
 import { useNavigate } from '@solidjs/router'
 import { LoadingIndicator } from '@/components/LoadingIndicator'
+import { useAuth } from '@/auth/provider'
 
 const LoginSchema = v.pipe(
   v.object({
@@ -32,26 +33,30 @@ export type LoginForm = v.InferOutput<typeof LoginSchema>
 
 export function LoginForm() {
   const [authForm, { Form, Field }] = createForm<LoginForm>()
+  const { setUser } = useAuth()
   const navigate = useNavigate()
 
-  const handleSubmit: SubmitHandler<LoginForm> = ({ email, username, password }) => {
+  const handleSubmit: SubmitHandler<LoginForm> = async ({ email, username, password }) => {
+    let response
+
     if (email && password) {
-      return loginClient({ email, password }).then((response) => {
-        if (response?.ok) {
-          navigate('/')
-        } else {
-          toast.error('Failed to login. Please try again.')
-        }
-      })
+      response = await loginClient({ email, password })
     } else if (username && password) {
-      return loginClient({ username, password }).then((response) => {
-        if (response?.ok) {
-          navigate('/')
-        } else {
-          toast.error('Failed to login. Please try again.')
-        }
-      })
+      response = await loginClient({ username, password })
     }
+
+    if (response?.ok) {
+      const data = await response.json()
+
+      if (data?.user) {
+        setUser(data.user)
+        toast.success('You have successfully logged in.')
+        navigate('/')
+        return
+      }
+    }
+
+    toast.error('Failed to login.')
   }
 
   return (
