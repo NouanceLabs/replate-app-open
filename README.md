@@ -6,7 +6,7 @@ Replate is a food recipe generation app and semi-social media platform for recip
 
 This is our entry into the SolidJS hackathon 2024.
 
-Team is [Paul](https://x.com/paulpopus) and [Shelly](https://www.shellster.de/).
+Team is [Paul](https://x.com/paulpopus) and [Shelly](https://www.instagram.com/shellsterstudios/profilecard/).
 
 This project was started on Oct 19 2024.
 
@@ -63,3 +63,5 @@ Then run dev
 ```bash
 pnpm dev
 ```
+
+Your frontend should now run at `localhost:3001` as it bumps the port if it's use. You can specify specific ports for either service via `--port 3005`
