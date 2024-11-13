@@ -65,7 +65,6 @@ export function RegisterForm() {
         const data = await loginResponse.json()
 
         if (data?.user) {
-          console.log('setting user')
           setUser(data.user)
           navigate('/')
         }
