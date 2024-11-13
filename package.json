@@ -1,7 +1,7 @@
 {
   "name": "replate-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Recipe generation app built on SolidJS, Payload and OpenAI based on user ingredients and preferences.",
   "main": "index.js",
   "type": "module",
   "scripts": {
