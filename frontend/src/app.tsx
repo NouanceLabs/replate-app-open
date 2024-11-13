@@ -22,6 +22,12 @@ export default function App() {
           <Meta property='og:title' content='Replate' />
           <Meta property='og:description' content='Generate personalised recipes based on the ingredients you have at home.' />
           <Meta property='twitter:image' content='https://replate.food/images/og.jpg' />
+          <Link rel='icon' type='image/png' href='/favicon-96x96.png' sizes='96x96' />
+          <Link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+          <Link rel='shortcut icon' href='/favicon.ico' />
+          <Link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png' />
+          <Meta name='apple-mobile-web-app-title' content='Replate' />
+          <Link rel='manifest' href='/site.webmanifest' />
 
           <AuthProvider>
             <Header />
