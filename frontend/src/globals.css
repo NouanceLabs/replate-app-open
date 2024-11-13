@@ -211,7 +211,7 @@ body {
 }
 
 .brand-gradient {
-  background: linear-gradient(to bottom, var(--general-brand-accent) 0%, var(--general-primary) 100%);
+  background: linear-gradient(135deg, var(--general-brand-accent) 0%, var(--general-primary) 100%);
 }
 
 .primary-gradient {

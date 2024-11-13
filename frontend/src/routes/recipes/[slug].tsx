@@ -16,6 +16,8 @@ import { authenticateUser } from '@/auth/api'
 import { PhotoSelector } from '@/components/PhotoSelector'
 import { useAuth } from '@/auth/provider'
 import { RecipeActions } from '@/components/RecipeActions'
+import { Title, Meta } from '@solidjs/meta'
+import { formatCalories, formatDifficulty } from '@/lib/utils'
 
 const getRecipe = async (slug: string, options?: APIOptions) => {
   'use server'
@@ -83,104 +85,109 @@ export default function RecipesPage() {
   })
 
   return (
-    <GeneralLayout>
-      <Show when={recipe()} fallback={<div>LOADING...</div>}>
-        <div class='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-16'>
-          <div class='relative justify-centerw-full md:min-h-[37.5rem] md:max-h-[50rem] md:max-w-[30rem]'>
-            <Show
-              when={recipe()?.featuredImage}
-              fallback={
-                <Show when={recipe()}>
-                  <div class='border rounded-6 w-full h-full flex items-center justify-center py-12'>
-                    <PhotoSelector refetch={refetch} recipe={recipe} />
-                  </div>
-                </Show>
-              }>
-              <Image
-                media={recipe()!.featuredImage as Media}
-                size='xlarge'
-                enableWrapper={false}
-                className='object-cover h-full w-full rounded-5'
-              />
+    <>
+      <Title>{recipe()?.title} | Replate</Title>
+      <Meta property='og:title' content={`${recipe()?.title} | Replate`} />
+      <Meta property='og:title' content={`${recipe()?.title} | Replate`} />
+      <GeneralLayout>
+        <Show when={recipe()} fallback={<div>LOADING...</div>}>
+          <div class='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-16'>
+            <div class='relative justify-centerw-full md:min-h-[37.5rem] md:max-h-[50rem] md:max-w-[30rem]'>
+              <Show
+                when={recipe()?.featuredImage}
+                fallback={
+                  <Show when={recipe()}>
+                    <div class='border rounded-6 w-full h-full flex items-center justify-center py-12'>
+                      <PhotoSelector refetch={refetch} recipe={recipe} />
+                    </div>
+                  </Show>
+                }>
+                <Image
+                  media={recipe()!.featuredImage as Media}
+                  size='xlarge'
+                  enableWrapper={false}
+                  className='object-cover h-full w-full rounded-5'
+                />
 
-              <Tooltip>
-                <TooltipTrigger class='absolute top-4 right-4 text-white'>
-                  <HelpCircleIcon /> <span class='sr-only'>Photo attribution</span>
-                </TooltipTrigger>
-                <TooltipContent class='max-w-[30rem] text-white bg-general-fg-primary'>
-                  <div class='prose prose-invert'>
-                    <p>{`We're using images from Unsplash to display our generated recipes. All image rights belong to the creator.`}</p>
-                    <p innerHTML={(recipe()!.featuredImage as Media).attribution || ''}></p>
-                  </div>
-                </TooltipContent>
-              </Tooltip>
-            </Show>
-          </div>
-          <div class='grid grid-rows-[auto] xl:col-span-2 cols-1 xl:grid-cols-[6fr_4fr] gap-16'>
-            <div>
-              <h1 class='heading-1 mb-4'>{recipe()!.title}</h1>
+                <Tooltip>
+                  <TooltipTrigger class='absolute top-4 right-4 text-white'>
+                    <HelpCircleIcon /> <span class='sr-only'>Photo attribution</span>
+                  </TooltipTrigger>
+                  <TooltipContent class='max-w-[30rem] text-white bg-general-fg-primary'>
+                    <div class='prose prose-invert'>
+                      <p>{`We're using images from Unsplash to display our generated recipes. All image rights belong to the creator.`}</p>
+                      <p innerHTML={(recipe()!.featuredImage as Media).attribution || ''}></p>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </Show>
+            </div>
+            <div class='grid grid-rows-[auto] xl:col-span-2 cols-1 xl:grid-cols-[6fr_4fr] gap-16'>
+              <div>
+                <h1 class='heading-1 mb-4'>{recipe()!.title}</h1>
 
-              <div class='text-general-fg-primary flex flex-col md:flex-row gap-4 mb-6'>
-                <div class='flex gap-1 items-center'>
-                  <ClockIcon />
-                  <span class=''>{recipe()!.prepTime?.replace('minutes', 'min')}</span>
+                <div class='text-general-fg-primary flex flex-col md:flex-row gap-4 mb-6'>
+                  <div class='flex gap-1 items-center'>
+                    <ClockIcon />
+                    <span class=''>{recipe()!.prepTime?.replace('minutes', 'min')}</span>
+                  </div>
+
+                  <div class='flex gap-1 items-center'>
+                    <FireIcon />
+                    <span class=''>{formatCalories(recipe()!.calories!)}</span>
+                  </div>
+
+                  <div class='flex gap-1 items-center'>
+                    <LightningBoltIcon />
+                    <span class=''>{formatDifficulty(recipe()!.difficulty!, 'full')}</span>
+                  </div>
                 </div>
 
-                <div class='flex gap-1 items-center'>
-                  <FireIcon />
-                  <span class=''>{recipe()!.calories}kcal</span>
-                </div>
+                <div>
+                  <h2 class='heading-3 mb-4'>Instructions</h2>
 
-                <div class='flex gap-1 items-center'>
-                  <LightningBoltIcon />
-                  <span class=''>{recipe()!.difficulty}</span>
+                  <For each={recipe()!.instructions}>
+                    {(ingredient, index) => {
+                      const step = index() + 1
+                      const isLast = index() === recipe()!.instructions!.length - 1
+
+                      return (
+                        <div class='relative flex items-center text-general-fg-secondary gap-2 pl-4'>
+                          <div
+                            class={clsx('pl-8  pb-8', {
+                              'border-l border-l-general-fg-primary': !isLast,
+                            })}>
+                            <div class='absolute text-sm left-1 top-0 aspect-square w-6 h-6 flex items-center justify-center text-general-fg-inverse bg-general-fg-primary rounded-full'>
+                              {step}
+                            </div>
+
+                            <div>{ingredient.content}</div>
+                          </div>
+                        </div>
+                      )
+                    }}
+                  </For>
                 </div>
               </div>
 
               <div>
-                <h2 class='heading-3 mb-4'>Instructions</h2>
+                <RecipeActions isOwner={isOwner} recipe={recipe} refetch={refetch} />
 
-                <For each={recipe()!.instructions}>
-                  {(ingredient, index) => {
-                    const step = index() + 1
-                    const isLast = index() === recipe()!.instructions!.length - 1
+                <h2 class='heading-3 mb-4 mt-8'>Ingredients</h2>
 
-                    return (
-                      <div class='relative flex items-center text-general-fg-secondary gap-2 pl-4'>
-                        <div
-                          class={clsx('pl-8  pb-8', {
-                            'border-l border-l-general-fg-primary': !isLast,
-                          })}>
-                          <div class='absolute text-sm left-1 top-0 aspect-square w-6 h-6 flex items-center justify-center text-general-fg-inverse bg-general-fg-primary rounded-full'>
-                            {step}
-                          </div>
-
-                          <div>{ingredient.content}</div>
-                        </div>
-                      </div>
-                    )
-                  }}
+                <For each={recipe()!.ingredients}>
+                  {(ingredient) => (
+                    <div class='flex items-center text-general-fg-secondary gap-2 py-4 border-b border-b-elements-border-primary'>
+                      <ChevronRightIcon />
+                      <span>{ingredient.name}</span>
+                    </div>
+                  )}
                 </For>
               </div>
             </div>
-
-            <div>
-              <RecipeActions isOwner={isOwner} recipe={recipe} refetch={refetch} />
-
-              <h2 class='heading-3 mb-4 mt-8'>Ingredients</h2>
-
-              <For each={recipe()!.ingredients}>
-                {(ingredient) => (
-                  <div class='flex items-center text-general-fg-secondary gap-2 py-4 border-b border-b-elements-border-primary'>
-                    <ChevronRightIcon />
-                    <span>{ingredient.name}</span>
-                  </div>
-                )}
-              </For>
-            </div>
           </div>
-        </div>
-      </Show>
-    </GeneralLayout>
+        </Show>
+      </GeneralLayout>
+    </>
   )
 }

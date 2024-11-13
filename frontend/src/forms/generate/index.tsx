@@ -8,7 +8,7 @@ import {
   NumberFieldIncrementTrigger,
   NumberFieldInput,
 } from '@/components/ui/number-field'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 
 import { authenticateUser } from '@/auth/api'
 import { SearchIcon } from '@/icons/Search'
@@ -63,7 +63,7 @@ export function GenerateForm() {
   const [initialIngredients] = createResource(() => getIngredients())
 
   // We manage the ingredient list in a separate state so we can add and remove items without affecting the form state
-  const [ingredients, setIngredients] = createSignal<string[]>(initialIngredients() || [])
+  const [ingredients, setIngredients] = createSignal<string[]>([])
 
   const [difficulty, setDifficultySignal] = createSignal<DifficultyLevel>('beginner')
   const [servings, setServings] = createSignal<number>(2)
@@ -73,10 +73,7 @@ export function GenerateForm() {
 
   const [ingredientInput, setIngredientInput] = createSignal<string>('')
   const [submissionDialogOpen, setSubmissionDialogOpen] = createSignal<boolean>(false)
-
-  createEffect(() => {
-    if (initialIngredients()) setIngredients(initialIngredients() || [])
-  })
+  const [pantryDialogOpen, setPantryDialogOpen] = createSignal<boolean>(false)
 
   // Adding this handle so that spice level cannot be null
   const setSpiceLevel = (value: string | null) => {
@@ -87,7 +84,7 @@ export function GenerateForm() {
     if (value) setDifficultySignal(value as DifficultyLevel)
   }
 
-  const insertIngredient: JSX.EventHandler<HTMLFormElement, SubmitEvent> = (event) => {
+  const insertIngredientFromInput: JSX.EventHandler<HTMLFormElement, SubmitEvent> = (event) => {
     event.preventDefault()
 
     const ingredient = ingredientInput()
@@ -99,6 +96,10 @@ export function GenerateForm() {
 
   const removeIngredient = (ingredient: string) => {
     setIngredients((prev) => prev.filter((item) => item !== ingredient))
+  }
+
+  const insertIngredient = (ingredient: string) => {
+    setIngredients((prev) => [...prev, ingredient])
   }
 
   const removeCuisineItem = (label: string) => {
@@ -136,8 +137,6 @@ export function GenerateForm() {
       toast.error('An error occurred while generating the recipe. Refreshing.')
       reload()
     } else {
-      toast.success('Recipe generated! Redirecting...')
-
       toast.promise(
         new Promise((resolve, reject) => {
           setTimeout(() => {
@@ -151,7 +150,7 @@ export function GenerateForm() {
                 }
               })
               .catch((err) => reject(err))
-          }, 2500)
+          }, 3000)
         }),
         {
           loading: 'Recipe generated! Redirecting....',
@@ -173,11 +172,17 @@ export function GenerateForm() {
     generateRecipe()
   }
 
+  const ingredientExists = (ingredient: string) => {
+    const ingredientList = ingredients()
+
+    return Boolean(ingredientList.find((item) => item.toLowerCase() === ingredient.toLowerCase()))
+  }
+
   return (
     <div class='grid gap-[8rem]'>
       <div class='flex flex-col gap-6'>
         <div class='flex flex-col gap-12 xl:flex-row'>
-          <form class='flex flex-col gap-3' onSubmit={insertIngredient}>
+          <form class='flex flex-col gap-3' onSubmit={insertIngredientFromInput}>
             <div>
               <div class='relative display flex items-baseline'>
                 <p class='md:absolute -left-8 mr-2 heading-1 text-general-brand-accent'>1</p>
@@ -187,30 +192,51 @@ export function GenerateForm() {
                 Ingredients here are not persisted to your profile so feel free to remove and add items as needed for this specific recipe.
               </p>
 
-              <div class='flex gap-2'>
-                <TextField class='gap-1' onChange={setIngredientInput} value={ingredientInput()}>
-                  <TextFieldLabel class='sr-only'>Add an ingredient</TextFieldLabel>
-                  <div class='relative'>
-                    <TextFieldInput
-                      class='max-w-[32rem] indent-5 placeholder:text-primary-foreground/80'
-                      /* {...props} */
-                      type='text'
-                      placeholder='Add your ingredient'
-                    />
-                    <SearchIcon class='absolute w-4 left-2 top-2 pointer-events-none text-general-fg-secondary' />
-                  </div>
-                </TextField>
-                <Button type='submit' class='' disabled={false}>
-                  Insert
-                </Button>
+              <div class='flex flex-col md:flex-row items-start md:items-center gap-4'>
+                <div class='flex gap-2'>
+                  <TextField class='gap-1' onChange={setIngredientInput} value={ingredientInput()}>
+                    <TextFieldLabel class='sr-only'>Add an ingredient</TextFieldLabel>
+                    <div class='relative'>
+                      <TextFieldInput
+                        class='max-w-[32rem] indent-5 placeholder:text-primary-foreground/80'
+                        /* {...props} */
+                        type='text'
+                        placeholder='Add your ingredient'
+                      />
+                      <SearchIcon class='absolute w-4 left-2 top-2 pointer-events-none text-general-fg-secondary' />
+                    </div>
+                  </TextField>
+                  <Button type='submit' class='' disabled={false}>
+                    Insert
+                  </Button>
+                </div>
+                <Show when={initialIngredients()?.length}>
+                  <Dialog open={pantryDialogOpen()} onOpenChange={setPantryDialogOpen}>
+                    <DialogTrigger as={Button} variant='secondary'>
+                      From my pantry
+                    </DialogTrigger>
+                    <DialogContent class=''>
+                      <h3 class='text-sm font-medium'>From my pantry</h3>
+                      <ul class='max-h-[30rem] overflow-y-auto lg:max-h-none grid grid-cols-1 lg:grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))] gap-8'>
+                        <For each={initialIngredients()}>
+                          {(ingredient) => (
+                            <Show when={!ingredientExists(ingredient)}>
+                              <IngredientItem ingredient={ingredient} onInsert={insertIngredient} as='li' />
+                            </Show>
+                          )}
+                        </For>
+                      </ul>
+                    </DialogContent>
+                  </Dialog>
+                </Show>
               </div>
             </div>
           </form>
         </div>
 
         <div>
-          <Show when={ingredients().length} fallback={<div>No ingredients have been added.</div>}>
-            <ul class='max-h-[30rem] overflow-y-auto lg:max-h-none grid grid-cols-1 lg:grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))] gap-8'>
+          <Show when={ingredients().length} fallback={<div class='mb-8'>No ingredients have been added.</div>}>
+            <ul class='max-h-[30rem] mb-12 overflow-y-auto lg:max-h-none grid grid-cols-1 lg:grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))] gap-8'>
               <For each={ingredients()}>
                 {(ingredient) => <IngredientItem ingredient={ingredient} onRemove={removeIngredient} as='li' />}
               </For>
@@ -249,6 +275,7 @@ export function GenerateForm() {
           </SelectTrigger>
           <SelectContent />
         </Select>
+        <p class='mt-2 text-sm text-general-fg-secondary'>You can choose multiple</p>
 
         <Show when={cuisinePreferences().length} fallback={<div class='mt-8'>No cuisine preferences selected. We'll be creative!</div>}>
           <ul class='mt-4'>
@@ -289,6 +316,7 @@ export function GenerateForm() {
           </SelectTrigger>
           <SelectContent />
         </Select>
+        <p class='mt-2 text-sm text-general-fg-secondary'>You can choose multiple</p>
 
         <Show when={dietaryPreferences().length} fallback={<div class='mt-8'>No dietary preferences selected.</div>}>
           <ul class='mt-4'>
@@ -320,7 +348,7 @@ export function GenerateForm() {
                 <img
                   class='rounded-full mb-4'
                   alt='spice level hot habanero pepper'
-                  src='/images/spice-level-hot.jpeg'
+                  src='/images/spice-level-mild.jpg'
                   height={512}
                   width={512}
                   loading='lazy'
@@ -333,7 +361,7 @@ export function GenerateForm() {
                 <img
                   class='rounded-full mb-4'
                   alt='spice level hot habanero pepper'
-                  src='/images/spice-level-hot.jpeg'
+                  src='/images/spice-level-medium.jpg'
                   height={512}
                   width={512}
                   loading='lazy'
@@ -423,15 +451,6 @@ export function GenerateForm() {
           <h2 class='heading-1 mb-4'>Ready!</h2>
         </div>
         <div class='flex flex-col gap-8 bg-white shadow-sm p-8 rounded-5 lg:rounded-10'>
-          <div>
-            <SummaryItem label='Ingredients' value={ingredients} />
-            <SummaryItem label='Cuisine Preferences' value={cuisinePreferences} />
-            <SummaryItem label='Dietary Preferences' value={dietaryPreferences} />
-            <SummaryItem label='Spice Level' value={spiceLevel} />
-            <SummaryItem label='Difficulty' value={difficulty} />
-            <SummaryItem label='Servings' value={servings} />
-          </div>
-
           <div class=''>
             <h2 class='heading-4'>Servings</h2>
             <Label for='servings-field-input' class='sr-only'>
@@ -453,6 +472,15 @@ export function GenerateForm() {
             </NumberField>
           </div>
 
+          <div>
+            <SummaryItem label='Ingredients' value={ingredients} />
+            <SummaryItem label='Cuisine Preferences' value={cuisinePreferences} />
+            <SummaryItem label='Dietary Preferences' value={dietaryPreferences} />
+            <SummaryItem label='Spice Level' value={spiceLevel} />
+            <SummaryItem label='Difficulty' value={difficulty} />
+            <SummaryItem label='Servings' value={servings} />
+          </div>
+
           <div class=''>
             <Button type='submit' onClick={submitGeneration}>
               Generate recipe
@@ -462,7 +490,9 @@ export function GenerateForm() {
       </div>
 
       <Dialog open={submissionDialogOpen()} onOpenChange={() => {}}>
-        <DialogContent showCloseButton={false}>generating...</DialogContent>
+        <DialogContent showCloseButton={false} class='brand-gradient'>
+          <img loading='lazy' src='/images/loading-gif.gif' />
+        </DialogContent>
       </Dialog>
     </div>
   )

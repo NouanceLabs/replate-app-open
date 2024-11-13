@@ -9,11 +9,8 @@ export const GenerateSidebar = () => {
           <p>
             <strong>How it works:</strong>
           </p>
-          <p>
-            Simply type in your ingredients, adjust the number of servings, the complexity and the amount of details and click the button to
-            generate a recipe.
-          </p>
-          <p>Your ingredients will be saved in your account and displayed right here next time you generate a recipe.</p>
+          <p>Simply type in your ingredients, choose your preferences, adjust the numbers of servings and generate a recipe.</p>
+          <p> You can then add a photo by using the generated phpto filters on the recipe page and publish or save your recipe.</p>
         </div>
 
         <div>
@@ -26,11 +23,8 @@ export const GenerateSidebar = () => {
           <AccordionTrigger>How it works:</AccordionTrigger>
           <AccordionContent>
             <div class='prose mb-12'>
-              <p>
-                Simply type in your ingredients, adjust the number of servings, the complexity and the amount of details and click the
-                button to generate a recipe.
-              </p>
-              <p>Your ingredients will be saved in your account and displayed right here next time you generate a recipe.</p>
+              <p>Simply type in your ingredients, choose your preferences, adjust the numbers of servings and generate a recipe.</p>
+              <p> You can then add a photo by using the generated photo filters on the recipe page and publish or save your recipe.</p>
             </div>
           </AccordionContent>
         </AccordionItem>

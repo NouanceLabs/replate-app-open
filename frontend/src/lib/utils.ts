@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import { Accessor, createEffect, onCleanup } from 'solid-js'
 import { useNavigate } from '@solidjs/router'
+import { Recipe } from '@payload/payload-types'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -69,4 +70,31 @@ export const useClickableCard = (cardRef: Accessor<HTMLElement | undefined>, anc
     cardRef,
     anchorRef,
   }
+}
+
+export const formatDifficulty = (difficulty: NonNullable<Recipe['difficulty']>, type: 'full' | 'short' = 'short') => {
+  const map: Record<NonNullable<Recipe['difficulty']>, { full: string; short: string }> = {
+    beginner: {
+      full: 'Easy',
+      short: 'Easy',
+    },
+    intermediate: {
+      full: 'Medium',
+      short: 'Med',
+    },
+    pro: {
+      full: 'Pro',
+      short: 'Pro',
+    },
+  }
+
+  return map[difficulty][type]
+}
+
+export const formatCalories = (calories: string) => {
+  if (calories.includes('kcal')) {
+    const [caloriesCount] = calories.split('kcal')
+    return `${caloriesCount.trim()}kcal`
+  }
+  return `${calories}kcal`
 }

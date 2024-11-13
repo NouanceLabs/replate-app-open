@@ -5,7 +5,7 @@ import { ClockIcon } from '@/icons/Clock'
 import { LightningBoltIcon } from '@/icons/LightningBolt'
 import { createSignal, Show } from 'solid-js'
 import { A } from '@solidjs/router'
-import { useClickableCard } from '@/lib/utils'
+import { formatCalories, formatDifficulty, useClickableCard } from '@/lib/utils'
 
 interface Props {
   data: Recipe
@@ -34,12 +34,12 @@ export const RecipeCard = ({ data }: Props) => {
 
         <div class='flex gap-1 items-center'>
           <FireIcon />
-          <span class=''>{calories}</span>
+          <span class=''>{formatCalories(calories!)}</span>
         </div>
 
         <div class='flex gap-1 items-center'>
           <LightningBoltIcon />
-          <span class=''>{difficulty?.slice(0, 3)}</span>
+          <span class=''>{formatDifficulty(difficulty!, 'short')}</span>
         </div>
       </div>
       <Show
